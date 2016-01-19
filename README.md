@@ -1,6 +1,6 @@
 # Clade workshops
 
-Open Tree of Life and FuturePhy are holding a series of workshops on challenges of tree-data integration. See the original [call for proposals](https://futurephy.org/content/article/2-uncategorised/34-rfp-clade). 
+Open Tree of Life and FuturePhy are holding a series of workshops on challenges of tree-data integration. See the original [call for proposals](https://futurephy.org/content/article/2-uncategorised/34-rfp-clade). We funded three initial workshops on catfishes, barnacles and beetles. 
 
 ## Dates and Location
 
