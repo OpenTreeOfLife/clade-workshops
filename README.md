@@ -18,6 +18,8 @@ We will have a detailed schedule closer to the event.
 
 ## Before the event
 
-If you have tasks that your group want to get done before the event, feel free to use the [issue tracker](https://github.com/OpenTreeOfLife/clade-workshops/issues) associated with this repository to track items. For example, you might want to upload specific trees to Open Tree of Life, or assemble trait data for Arbor analyses. We've created labels for each of the groups: [barnacles](https://github.com/OpenTreeOfLife/clade-workshops/labels/barnacles), [beetles](https://github.com/OpenTreeOfLife/clade-workshops/labels/beetles), [catfishes](https://github.com/OpenTreeOfLife/clade-workshops/labels/catfishes).
+If you have tasks that your group want to get done before the event, feel free to use the [issue tracker](https://github.com/OpenTreeOfLife/clade-workshops/issues) associated with this repository to track items. For example, you might want to upload specific trees to Open Tree of Life, or assemble trait data for Arbor analyses. We've created labels for each of the groups: [barnacles](https://github.com/OpenTreeOfLife/clade-workshops/labels/barnacles), [beetles](https://github.com/OpenTreeOfLife/clade-workshops/labels/beetles), [catfishes](https://github.com/OpenTreeOfLife/clade-workshops/labels/catfishes). 
+
+For example, I've created an [issue asking everyone to add some information](https://github.com/OpenTreeOfLife/clade-workshops/issues/1) to the [participant list](https://github.com/OpenTreeOfLife/clade-workshops/wiki/Participant-list). 
 
 
