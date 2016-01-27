@@ -14,7 +14,7 @@ We will have a detailed schedule closer to the event.
 
 **Flights**: Airfare is being covered by Open Tree of Life through Duke University. Please do not book your own flights! Contact Jan at McLaurin Travel (jan@mclaurintravel.com) with your flight preferences. All travel must be on US-based carriers to comply with grant regulations. 
 
-**Hotel**: We have reserved a block of rooms at the [Holiday Inn](http://www.holidayinn.com/hotels/us/en/gainesville/gnvuc/hoteldetail). To book you can either call the hotel and book under group code FPW or online with this link: [Future Phy Workshop](http://www.holidayinn.com/redirect?path=hd&brandCode=hi&localeCode=en&regionCode=1&hotelCode=GNVUC&_PMID=99801505&GPC=FPW). The rate is $129.00 but it will be taken care of at check-out (Thanks to FuturePhy!)
+**Hotel**: We have reserved a block of rooms at the [Holiday Inn](http://www.holidayinn.com/hotels/us/en/gainesville/gnvuc/hoteldetail). To book you can either call the hotel and book under group code FPW or online with this link: [Future Phy Workshop](http://www.holidayinn.com/redirect?path=hd&brandCode=hi&localeCode=en&regionCode=1&hotelCode=GNVUC&_PMID=99801505&GPC=FPW). The rate is $129.00 but it will be taken care of at check-out (Thanks to FuturePhy!) (Update 1/26: The group code expired on 1/22 and there seem to be no rooms left at the hotel, at least on 2/19.)
 
 ## Before the event
 
