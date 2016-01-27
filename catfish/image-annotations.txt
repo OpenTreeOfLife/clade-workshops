@@ -1,0 +1,13 @@
+taxon,character,state,image
+Cranoglanis_bouderius,1,0,M366195
+Cranoglanis_bouderius,2,0,M366196
+Ictalurus_meridionalis,1,0,M366701
+Ictalurus_meridionalis,2,0,M366701
+Noturus_flavus,1,0,M366710
+Noturus_flavus,2,0,M366162
+Prietella_phreatophila,1,0,M366726
+Prietella_phreatophila,2,1,M366241
+Pylodictis_olivaris,1,2,M366715
+Pylodictis_olivaris,2,0,,M366715
+Satan_eurystomus,1,1,M379538
+Satan_eurystomus,2,1,M366192
