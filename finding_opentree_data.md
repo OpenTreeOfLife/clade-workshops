@@ -18,25 +18,25 @@ Here are links to the taxonomy browser for the three clades:
 ##Published phylogenies
 We don't have a way to search for taxa in the online interface for the curator tool. But, we do have [web services](https://github.com/OpenTreeOfLife/opentree/wiki/Open-Tree-of-Life-APIs) for this that you can call using `curl`. By default, these only return the identifiers for the studies and trees. You can use the `verbose` option to get all of the info, or use the `study` methods to retrieve single studies or trees - see the [documentation](https://github.com/OpenTreeOfLife/opentree/wiki/Open-Tree-of-Life-APIs#studies-containing-source-trees). 
 
-Barnacles:
+Barnacles (as of Feb 18, 11 studies):
 
     curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Thecostraca"}'
 
-Catfish: 
+Catfish (as of Feb 18, 12 studies): 
 
     curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Siluriformes"}'
 
-Chrysomeloidea:
+Chrysomeloidea (as of Feb 18, 1 study):
 
     curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Chrysomeloidea"}'
 
-Curculionoidea:
+Curculionoidea (as of Feb 18, 3 studies):
 
     curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
