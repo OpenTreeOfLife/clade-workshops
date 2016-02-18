@@ -20,24 +20,24 @@ We don't have a way to search for taxa in the online interface for the curator t
 
 Barnacles:
 
-    https://api.opentreeoflife.org/v2/studies/find_trees \
+    curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Thecostraca"}'
 
 Catfish: 
 
-    https://api.opentreeoflife.org/v2/studies/find_trees \
+    curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Siluriformes"}'
 
 Chrysomeloidea:
 
-    https://api.opentreeoflife.org/v2/studies/find_trees \
+    curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Chrysomeloidea"}'
 
 Curculionoidea:
 
-    https://api.opentreeoflife.org/v2/studies/find_trees \
+    curl -X POST https://api.opentreeoflife.org/v2/studies/find_trees \
     -H "content-type:application/json" \
     -d '{"property":"ot:ottTaxonName","value":"Curculionoidea"}'
