@@ -6,7 +6,7 @@ Open Tree of Life and FuturePhy are holding a series of workshops on challenges 
 
 * where: [Informatics Institute](https://informatics.institute.ufl.edu/), University of Florida, Gainesville, FL [map](http://campusmap.ufl.edu/#/index/0042)
 * dates: Saturday, Feb 20 through Monday, Feb 22
-* times: 9 am - 4 pm daily
+* times: 9 am - 4 pm daily (there will be coffee available at 8:30, and we are planning to start at 9)
 
 There is an [agenda](https://docs.google.com/document/d/1R_Dsw1dvOZxI7meBnj29JsUtk-WujybR3SA8wP5lFEg/edit) in google docs. This is not set in stone - there is plenty of room to adjust as needed throughout the weekend. 
 
