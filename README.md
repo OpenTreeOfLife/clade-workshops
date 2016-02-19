@@ -10,6 +10,8 @@ Open Tree of Life and FuturePhy are holding a series of workshops on challenges 
 
 There is an [agenda](https://docs.google.com/document/d/1R_Dsw1dvOZxI7meBnj29JsUtk-WujybR3SA8wP5lFEg/edit) in google docs. This is not set in stone - there is plenty of room to adjust as needed throughout the weekend. 
 
+During the workshop, we can use the [OpenTree public gitter channel](https://gitter.im/OpenTreeOfLife/public) for chat conversation. You can lurk without logging in, or sign in using GitHub to participate. 
+
 ## Flights and lodging
 
 **Flights**: Airfare is being covered by Open Tree of Life through Duke University. Please do not book your own flights! Contact Jan at McLaurin Travel (jan@mclaurintravel.com) with your flight preferences. All travel must be on US-based carriers to comply with grant regulations. 
