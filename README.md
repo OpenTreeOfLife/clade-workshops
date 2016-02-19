@@ -8,7 +8,7 @@ Open Tree of Life and FuturePhy are holding a series of workshops on challenges 
 * dates: Saturday, Feb 20 through Monday, Feb 22
 * times: 9 am - 4 pm daily
 
-We will have a detailed schedule closer to the event. 
+There is an [agenda](https://docs.google.com/document/d/1R_Dsw1dvOZxI7meBnj29JsUtk-WujybR3SA8wP5lFEg/edit) in google docs. 
 
 ## Flights and lodging
 
