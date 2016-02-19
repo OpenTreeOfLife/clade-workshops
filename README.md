@@ -4,7 +4,7 @@ Open Tree of Life and FuturePhy are holding a series of workshops on challenges 
 
 ## Dates and Location
 
-* where: University of Florida, Gainesville, FL
+* where: [Informatics Institute](https://informatics.institute.ufl.edu/), University of Florida, Gainesville, FL [map](http://campusmap.ufl.edu/#/index/0042)
 * dates: Saturday, Feb 20 through Monday, Feb 22
 * times: 9 am - 4 pm daily
 
