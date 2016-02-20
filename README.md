@@ -18,6 +18,7 @@ Hashtag for the meeting: [#futurearbOT](https://twitter.com/search?q=%23futurear
 
 There is an [agenda](https://docs.google.com/document/d/1R_Dsw1dvOZxI7meBnj29JsUtk-WujybR3SA8wP5lFEg/edit) in google docs. This is not set in stone - there is plenty of room to adjust as needed throughout the weekend. 
 
+**Dinner on Saturday**: [Leonardos](http://www.leonardosgainesville.com/) at 7 pm
 
 ## Flights and lodging
 
