@@ -2,6 +2,14 @@
 
 Open Tree of Life and FuturePhy are holding a series of workshops on challenges of tree-data integration. See the original [call for proposals](https://futurephy.org/content/article/2-uncategorised/34-rfp-clade). We funded three initial workshops on catfishes, barnacles and beetles. 
 
+## Conversation
+
+During the workshop, we can use the [OpenTree public gitter channel](https://gitter.im/OpenTreeOfLife/public) for chat conversation. You can lurk without logging in, or sign in using GitHub to participate. 
+
+You can leave an [issue](https://github.com/OpenTreeOfLife/clade-workshops/issues) on this repo if you have a question.
+
+Hashtag for the meeting: [#futurearbOT](https://twitter.com/search?q=%23futurearbOT&src=typd)
+
 ## Dates and Location
 
 * where: [Informatics Institute](https://informatics.institute.ufl.edu/), University of Florida, Gainesville, FL [map](http://campusmap.ufl.edu/#/index/0042)
@@ -10,7 +18,6 @@ Open Tree of Life and FuturePhy are holding a series of workshops on challenges 
 
 There is an [agenda](https://docs.google.com/document/d/1R_Dsw1dvOZxI7meBnj29JsUtk-WujybR3SA8wP5lFEg/edit) in google docs. This is not set in stone - there is plenty of room to adjust as needed throughout the weekend. 
 
-During the workshop, we can use the [OpenTree public gitter channel](https://gitter.im/OpenTreeOfLife/public) for chat conversation. You can lurk without logging in, or sign in using GitHub to participate. 
 
 ## Flights and lodging
 
