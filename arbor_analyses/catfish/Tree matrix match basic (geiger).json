@@ -1,0 +1,33 @@
+{
+    "inputs": [
+        {
+            "description": "input tree for matching",
+            "format": "r.apetree",
+            "name": "tree",
+            "type": "tree"
+        },
+        {
+            "description": "input character matrix for matching against the tree",
+            "format": "r.dataframe",
+            "name": "matrix",
+            "type": "table"
+        }
+    ],
+    "mode": "r",
+    "name": "Tree matrix match basic (geiger)",
+    "outputs": [
+        {
+            "description": "tree that has been matched against the matrix",
+            "format": "r.apetree",
+            "name": "trimmed_tree",
+            "type": "tree"
+        },
+        {
+            "description": "character matrix that has been matched against the tree",
+            "format": "r.dataframe",
+            "name": "trimmed_matrix",
+            "type": "table"
+        }
+    ],
+    "script": "#\n# input variables:\n# tree - input tree in APE format\n# matrix - input table as R dataframe\n\nrequire(ape)\nrequire(geiger)\n\n\n# match tips and data\ntd<-treedata(tree,matrix)\n\ntrimmed_tree <- td$phy\ntrimmed_matrix <- td$dat\n\n"
+}

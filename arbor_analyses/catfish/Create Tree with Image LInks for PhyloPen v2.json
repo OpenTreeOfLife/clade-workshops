@@ -1,0 +1,38 @@
+{
+    "description": "",
+    "inputs": [
+        {
+            "description": "tree to add characters and images to",
+            "format": "nested",
+            "id": "tree",
+            "name": "tree",
+            "type": "tree"
+        },
+        {
+            "description": "character matrix to add to tree tips",
+            "format": "rows",
+            "id": "matrix",
+            "name": "matrix",
+            "type": "table"
+        },
+        {
+            "description": "2 column table (taxon, imageURL) for adding image references to taxa",
+            "format": "rows",
+            "id": "image_reference_table",
+            "name": "image_reference_table",
+            "type": "table"
+        }
+    ],
+    "mode": "python",
+    "name": "Create Tree with Image LInks for PhyloPen v2",
+    "outputs": [
+        {
+            "description": "tree with trait and image reference data in the named nodes",
+            "format": "nested",
+            "id": "tree_with_traits",
+            "name": "tree_with_traits",
+            "type": "tree"
+        }
+    ],
+    "script": "#\n# Take a tree, matrix, and an image reference table as input. Create a nested format\n# tree with image references and attributes attached to the leaves of the tree for display\n# \n# KnowledgeVis, LLC\n# C Lisle\n#\n# update history\n# 2/22/16 - modified for multiple images option per taxon, with text\n\n# inputs:\n# tree - nested format tree with tipnames that match the matrix names\n# matrix - character matrix with names that match the tree tips\n# image_reference_table - 2 column table with tipname and image URL to load the image from\n\n# look through the rows of the image cross reference table.  This format comes from the phenoscape team\n# and has been processed by a previous method to look up the girder item numbers\ndef returnMatchingImageRecord(name):\n    global image_reference_table\n    record = {}\n    \n    # clip the tree name to just the first two words with a space between them\n    # to match more from the matrix\n    namesplit = name.split(' ')\n    if len(namesplit)>1:\n        name = namesplit[0]+' '+namesplit[1]\n    else:\n        name = namesplit[0]\n        \n    for row in image_reference_table['rows']:\n        #print 'looking for ',name,' in ',row\n        if (('taxon' in row) and (name == row['taxon'])):\n            return row['url']\n        if (('species' in row) and (name == row['species'])):\n            return row['url']\n        if (('name' in row) and (name == row['name'])):\n            return row['url']\n    return record\n          \n\n# look through the image matching table.  Three options for taxon name are supported because\n# matrices may not always be indexed the same.  We allow name,species, or taxon:\ndef returnMatchingImageRecordList(name):\n    global image_reference_table\n    records = []\n    for row in image_reference_table['rows']:\n        #print 'looking for ',name,' in ',row\n        if (('taxon' in row) and (name == row['taxon'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['taxon']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n        if (('species' in row) and (name == row['species'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['species']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n        if (('name' in row) and (name == row['name'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['name']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n    return records\n                        \n# look through the rows of the matrix and return a matching entry.  Return the \n# URL record or an empty set (to avoid run-time errors if data doesn't match\n\ndef returnMatchingMatrixRecord(name):\n    global matrix\n    record = {}\n    for row in matrix['rows']:\n        #print 'looking for ',name,' in matrix ',row\n        if (('name' in row) and (name == row['name'])):\n            return row\n        if (('species' in row) and (name == row['species'])):\n            return row\n        if (('taxa' in row) and (name == row['taxa'])):\n            #print 'found taxon match'\n            return row\n    return record\n            \n    \n# traverse through the tree and add records to the tips from the matrix and the image table\n\ndef addRecordsToTreeTips(treenode):\n    if 'children' in treenode:\n        for node in treenode['children']:\n            addRecordsToTreeTips(node)\n    else:\n        # this is a tip, add matrix and image infor\n        traits = returnMatchingMatrixRecord(treenode['node_data']['node name'])\n        #print 'matching trait record:',traits\n\n        treenode['node_data']['attributes'] = []\n        # add all columns in the character matrix, unless they are the taxa name, since this is already handled in the 'node name'\n        for trait in traits.keys():\n            if trait not in ['species','name','taxa']:\n                treenode['node_data']['attributes'].append({trait: traits[trait]})\n        # add the image attribute to point to the image binary.  There might be more than one image, so \n        # make the entry always be a list. Later we might change these records to have a key tied to a character\n        # to select which image, but just a list initially\n        nodename = treenode['node_data']['node name']\n        # only add an image record if we found an image to match this taxon\n        imageURLs = returnMatchingImageRecordList(treenode['node_data']['node name'])\n        #print 'matching image record:',imageURL\n        for imageRecord in imageURLs:\n            if 'images' in treenode['node_data']:\n                treenode['node_data']['images'].append(imageRecord)\n            else:\n                treenode['node_data']['images'] = []\n                treenode['node_data']['images'].append(imageRecord)\n\n# this routine adds any matrix categories to the record on the root of the tree that specifies\n# what fields are on the nodes.  PhyloPen uses this to parse for attributes to display in the attribute list UI\n\ndef addTraitsToNodeFieldsRecord(treeroot):\n    global matrix\n    #for field in matrix['fields']:\n    #    if field not in ['species','name','taxa']:\n    #        treeroot['node_fields'].append(field)\n    # indicate an attributes record\n    treeroot['node_fields'].append('attributes')\n    # indicate there could be an images record as well\n    treeroot['node_fields'].append('images')\n\n# ---- top level -----\n\ntree_with_traits = tree\naddRecordsToTreeTips(tree_with_traits)\naddTraitsToNodeFieldsRecord(tree_with_traits)\n\n\n\n"
+}

@@ -1,0 +1,22 @@
+{
+    "description": "make a pretend image cross-reference table.  This creates records of images for the species on the tree.  The input table is a single column of species names. that will match the tree names.  ",
+    "inputs": [
+        {
+            "format": "rows",
+            "id": "treetips",
+            "name": "tree tip name list",
+            "type": "table"
+        }
+    ],
+    "mode": "python",
+    "name": "Make Fake Image cross reference table",
+    "outputs": [
+        {
+            "format": "rows",
+            "id": "outlist",
+            "name": "Image Xref Table",
+            "type": "table"
+        }
+    ],
+    "script": "#\n# make a fake table the references actual image files stored on the SSD attached to Arbor\n\nfrom os import walk\nimport random\n\noutlist = {}\noutlist['fields'] = ['taxon','character','state','image']\noutlist['rows'] = []\n\n# make a list of images from what we have in the directory\n#imagelist = []\n#for (filenames) in walk('/vagrant/app/data/catfish-media'):\n#    imagelist.extend(filenames)\n#    break\n\nfrom os import listdir\nfrom os.path import isfile, join\n\nimage_path = '/vagrant/app/data/catfish-media/'\naccess_prefix = 'http://54.83.20.232:9080/data/catfish-media/'\nimagelist = [f for f in listdir(image_path) if isfile(join(image_path, f))]\nnumimages = len(imagelist)\n\n# now loop through the tree tips and generate a matching record\nfor row in treetips['rows']:\n    taxonname = row['name'].replace('_',' ')\n    imgnumber = random.randint(0, numimages-1)\n    record = {}\n    record['taxon'] = taxonname\n    record['character'] = str(random.randint(1,4))\n    record['state'] = str(random.randint(1,3))\n    record['image'] = access_prefix+str(imagelist[imgnumber])\n    outlist['rows'].append(record)\n    # about 40% of the records get two images\n    if random.randint(0,10)>5:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)\n    # about 20% of the records get an additional image\n    if random.randint(0,10)>7:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)\n        # about 10% of the records get an additional image\n    if random.randint(0,10)>8:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)"
+}

@@ -1,0 +1,433 @@
+{
+    "connections": [
+        {
+            "input": "tree",
+            "input_step": "Tip Names from Nested Tree",
+            "name": "tree"
+        },
+        {
+            "input": "table",
+            "input_step": "Table Keep First Column and Random Others",
+            "name": "table"
+        },
+        {
+            "input": "outColumnCount",
+            "input_step": "Table Keep First Column and Random Others",
+            "name": "outColumnCount"
+        },
+        {
+            "input": "datatable",
+            "input_step": "Table Remove Ontology Name Prefixes",
+            "output": "outTable",
+            "output_step": "Table Keep First Column and Random Others"
+        },
+        {
+            "name": "tree_with_traits",
+            "output": "tree_with_traits",
+            "output_step": "Create Tree with Image LInks for PhyloPen v2"
+        },
+        {
+            "input": "tree",
+            "input_step": "TreeAssignUniformEdgeWeightsIfMissing",
+            "name": "tree"
+        },
+        {
+            "input": "tree",
+            "input_step": "Create Tree with Image LInks for PhyloPen v2",
+            "output": "outtree",
+            "output_step": "TreeAssignUniformEdgeWeightsIfMissing"
+        },
+        {
+            "input": "treetips",
+            "input_step": "Make Fake Image cross reference table",
+            "output": "nametable",
+            "output_step": "Tip Names from Nested Tree"
+        },
+        {
+            "name": "Image Xref Table",
+            "output": "outlist",
+            "output_step": "Make Fake Image cross reference table"
+        },
+        {
+            "input": "image_reference_table",
+            "input_step": "Create Tree with Image LInks for PhyloPen v2",
+            "output": "outlist",
+            "output_step": "Make Fake Image cross reference table"
+        },
+        {
+            "input": "intable",
+            "input_step": "Table Replace undefined cells with NA",
+            "output": "outtable",
+            "output_step": "Table Remove Ontology Name Prefixes"
+        },
+        {
+            "input": "table",
+            "input_step": "Convert Morph Matrix to Numeric",
+            "output": "cleanTable",
+            "output_step": "Table Replace undefined cells with NA"
+        },
+        {
+            "input": "columnsToIgnore",
+            "input_step": "Convert Morph Matrix to Numeric",
+            "name": "columnsToIgnore"
+        },
+        {
+            "input": "matrix",
+            "input_step": "Create Tree with Image LInks for PhyloPen v2",
+            "output": "outtable",
+            "output_step": "Convert Morph Matrix to Numeric"
+        },
+        {
+            "name": "legend",
+            "output": "legend",
+            "output_step": "Convert Morph Matrix to Numeric"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "description": "nested format tree to extract node names from",
+            "format": "nested",
+            "id": "tree",
+            "name": "tree",
+            "type": "tree",
+            "x": 97,
+            "y": 305
+        },
+        {
+            "format": "rows",
+            "id": "table",
+            "name": "table",
+            "type": "table",
+            "x": 59,
+            "y": 31
+        },
+        {
+            "description": "how many randomly selected columns should be kept in the output",
+            "format": "number",
+            "id": "outColumnCount",
+            "name": "outColumnCount",
+            "type": "number",
+            "x": 48,
+            "y": 164
+        },
+        {
+            "description": "table with columnHeader header of fields to prevent history substitution",
+            "format": "rows",
+            "id": "columnsToIgnore",
+            "name": "columnsToIgnore",
+            "type": "table",
+            "x": 73,
+            "y": 454
+        }
+    ],
+    "mode": "workflow",
+    "name": "WF prepare for PhyloPen",
+    "outputs": [
+        {
+            "description": "tree with trait and image reference data in the named nodes",
+            "format": "nested",
+            "id": "tree_with_traits",
+            "name": "tree_with_traits",
+            "type": "tree",
+            "x": 1388,
+            "y": 424
+        },
+        {
+            "format": "rows",
+            "id": "Image Xref Table",
+            "name": "Image Xref Table",
+            "type": "table",
+            "x": 951,
+            "y": 421
+        },
+        {
+            "description": "records of how codes correspond to original values",
+            "format": "rows",
+            "id": "legend",
+            "name": "legend",
+            "type": "table",
+            "x": 1420,
+            "y": 40
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56c8c22992ccab03397bbc10",
+            "modified": "2016-02-21 03:46:57.551000",
+            "name": "Table Remove Ontology Name Prefixes",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "data table with long column names",
+                        "format": "rows",
+                        "id": "datatable",
+                        "name": "matrix input with ontology prefix",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Remove Ontology Name Prefixes",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "outtable",
+                        "name": "matrix with shorter column names",
+                        "type": "table"
+                    }
+                ],
+                "script": "# replace the names of all columns with simpler names.  This method assumes that each column name has a prefix with \n# 5 prefixes separated by dots \n\n# input: datatable - data table with long column names\n# output: outtable  \n\ninfields = datatable['fields']\n\noutfields = []\n\nnameMapping = {}\n\n# first build up a dictionary indexed by the previous string\nfor field in infields:\n    currentField = field\n    for count in range(5):\n        # see if there is a prefix left to delete\n        if \".\" in currentField:\n            currentField  = currentField[currentField.index(\".\")+1:]\n        else:\n            pass\n    nameMapping[field] = currentField\n    outfields.append(currentField)\n        \n# now loop through the source table and change the fieldnames when writing\n# the output\n\noutrows = []\nfor row in datatable['rows']:\n    outrow = {}\n    for field in infields:\n        # write out the fields using the new name for each attribute\n        outrow[nameMapping[field]] = row[field]\n    outrows.append(outrow)\n        \nouttable = {}\nouttable['fields'] = outfields\nouttable['rows'] = outrows\n"
+            },
+            "visualization": false,
+            "x": 577,
+            "y": 53
+        },
+        {
+            "girderId": "56c6ed947a773016c6f58af2",
+            "modified": "2016-02-19 10:25:25.267000",
+            "name": "Tip Names from Nested Tree",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "nested format tree to extract node names from",
+                        "format": "nested",
+                        "name": "tree",
+                        "type": "tree"
+                    }
+                ],
+                "mode": "python",
+                "name": "Tip Names from Nested Tree",
+                "outputs": [
+                    {
+                        "description": "single column table with species names",
+                        "format": "rows",
+                        "name": "nametable",
+                        "type": "table"
+                    }
+                ],
+                "script": "\n# traverse a tree in nested format and output a single column table with species names from the tree taxa\n\n# C. Lisle\n# KnowledgeVis, LLC\n\n# released under the Apache 2.0 open-source license\n\n# inputs:\n#    tree - tree in nested format \n# outputs:\n#    nametable - table:rows with single column containing species names from the tree taxa\n\nnameList = []\n\n# this is invoked for each taxon node in the tree.  If the taxon is named, the name is added to a global list\ndef taxonOperation(node):\n    if 'node name' in node['node_data'].keys():\n        nameList.append(node['node_data']['node name'])\n\n        \n# recursive traversal of tree in nested format.  Once a taxon is reached, invoke the 'taxonOperation()' routine with the taxon node\ndef traverseNestedTree(treenode):\n    # look at the current tree node and see if there are children or not\n    if 'children' in treenode.keys():\n        #case for a hierarchy node, traverse to all the children\n        for node in treenode['children']:\n            traverseNestedTree(node)\n    else:\n        #case for a taxa. Look through the occurrence and add records to \n        # this node\n        taxonOperation(treenode)\n        \n# run the traversal and copy the output name list\ntraverseNestedTree(tree)\n\n# prepare the output single column table of species names\nnametable = {}\nnametable['fields'] = []\nnametable['rows'] = []\nnametable['fields'].append('name')\n\nfor name in nameList:\n    outRecord = {}\n    outRecord['name'] = name\n    nametable['rows'].append(outRecord)\n    \n\n"
+            },
+            "visualization": false,
+            "x": 379,
+            "y": 386
+        },
+        {
+            "girderId": "56ca9d3b92ccab170bbc56a1",
+            "modified": "2016-02-22 08:28:30.888000",
+            "name": "Create Tree with Image LInks for PhyloPen v2",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "tree to add characters and images to",
+                        "format": "nested",
+                        "id": "tree",
+                        "name": "tree",
+                        "type": "tree"
+                    },
+                    {
+                        "description": "character matrix to add to tree tips",
+                        "format": "rows",
+                        "id": "matrix",
+                        "name": "matrix",
+                        "type": "table"
+                    },
+                    {
+                        "description": "2 column table (taxon, imageURL) for adding image references to taxa",
+                        "format": "rows",
+                        "id": "image_reference_table",
+                        "name": "image_reference_table",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Create Tree with Image LInks for PhyloPen v2",
+                "outputs": [
+                    {
+                        "description": "tree with trait and image reference data in the named nodes",
+                        "format": "nested",
+                        "id": "tree_with_traits",
+                        "name": "tree_with_traits",
+                        "type": "tree"
+                    }
+                ],
+                "script": "#\n# Take a tree, matrix, and an image reference table as input. Create a nested format\n# tree with image references and attributes attached to the leaves of the tree for display\n# \n# KnowledgeVis, LLC\n# C Lisle\n#\n# update history\n# 2/22/16 - modified for multiple images option per taxon, with text\n\n# inputs:\n# tree - nested format tree with tipnames that match the matrix names\n# matrix - character matrix with names that match the tree tips\n# image_reference_table - 2 column table with tipname and image URL to load the image from\n\n# look through the rows of the image cross reference table.  This format comes from the phenoscape team\n# and has been processed by a previous method to look up the girder item numbers\ndef returnMatchingImageRecord(name):\n    global image_reference_table\n    record = {}\n    \n    # clip the tree name to just the first two words with a space between them\n    # to match more from the matrix\n    namesplit = name.split(' ')\n    if len(namesplit)>1:\n        name = namesplit[0]+' '+namesplit[1]\n    else:\n        name = namesplit[0]\n        \n    for row in image_reference_table['rows']:\n        #print 'looking for ',name,' in ',row\n        if (('taxon' in row) and (name == row['taxon'])):\n            return row['url']\n        if (('species' in row) and (name == row['species'])):\n            return row['url']\n        if (('name' in row) and (name == row['name'])):\n            return row['url']\n    return record\n          \n\n# look through the image matching table.  Three options for taxon name are supported because\n# matrices may not always be indexed the same.  We allow name,species, or taxon:\ndef returnMatchingImageRecordList(name):\n    global image_reference_table\n    records = []\n    for row in image_reference_table['rows']:\n        #print 'looking for ',name,' in ',row\n        if (('taxon' in row) and (name == row['taxon'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['taxon']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n        if (('species' in row) and (name == row['species'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['species']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n        if (('name' in row) and (name == row['name'])):\n            # if we found a name match, but no image was resolved, don't add this option\n            if len(row['image'])>0:\n                newrecord = {'image': row['image'], 'text': row['name']}\n                if 'character' in row:\n                    newrecord['text'] += '/character='+ str(row['character'])\n                if 'state' in row:\n                    newrecord['text'] += '/state='+ str(row['state'])\n                records.append(newrecord)\n    return records\n                        \n# look through the rows of the matrix and return a matching entry.  Return the \n# URL record or an empty set (to avoid run-time errors if data doesn't match\n\ndef returnMatchingMatrixRecord(name):\n    global matrix\n    record = {}\n    for row in matrix['rows']:\n        #print 'looking for ',name,' in matrix ',row\n        if (('name' in row) and (name == row['name'])):\n            return row\n        if (('species' in row) and (name == row['species'])):\n            return row\n        if (('taxa' in row) and (name == row['taxa'])):\n            #print 'found taxon match'\n            return row\n    return record\n            \n    \n# traverse through the tree and add records to the tips from the matrix and the image table\n\ndef addRecordsToTreeTips(treenode):\n    if 'children' in treenode:\n        for node in treenode['children']:\n            addRecordsToTreeTips(node)\n    else:\n        # this is a tip, add matrix and image infor\n        traits = returnMatchingMatrixRecord(treenode['node_data']['node name'])\n        #print 'matching trait record:',traits\n\n        treenode['node_data']['attributes'] = []\n        # add all columns in the character matrix, unless they are the taxa name, since this is already handled in the 'node name'\n        for trait in traits.keys():\n            if trait not in ['species','name','taxa']:\n                treenode['node_data']['attributes'].append({trait: traits[trait]})\n        # add the image attribute to point to the image binary.  There might be more than one image, so \n        # make the entry always be a list. Later we might change these records to have a key tied to a character\n        # to select which image, but just a list initially\n        nodename = treenode['node_data']['node name']\n        # only add an image record if we found an image to match this taxon\n        imageURLs = returnMatchingImageRecordList(treenode['node_data']['node name'])\n        #print 'matching image record:',imageURL\n        for imageRecord in imageURLs:\n            if 'images' in treenode['node_data']:\n                treenode['node_data']['images'].append(imageRecord)\n            else:\n                treenode['node_data']['images'] = []\n                treenode['node_data']['images'].append(imageRecord)\n\n# this routine adds any matrix categories to the record on the root of the tree that specifies\n# what fields are on the nodes.  PhyloPen uses this to parse for attributes to display in the attribute list UI\n\ndef addTraitsToNodeFieldsRecord(treeroot):\n    global matrix\n    #for field in matrix['fields']:\n    #    if field not in ['species','name','taxa']:\n    #        treeroot['node_fields'].append(field)\n    # indicate an attributes record\n    treeroot['node_fields'].append('attributes')\n    # indicate there could be an images record as well\n    treeroot['node_fields'].append('images')\n\n# ---- top level -----\n\ntree_with_traits = tree\naddRecordsToTreeTips(tree_with_traits)\naddTraitsToNodeFieldsRecord(tree_with_traits)\n\n\n\n"
+            },
+            "visualization": false,
+            "x": 1306,
+            "y": 216
+        },
+        {
+            "girderId": "56c6ed957a773016c6f58af7",
+            "modified": "2016-02-19 10:25:25.304000",
+            "name": "Table Keep First Column and Random Others",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "id": "table",
+                        "name": "table",
+                        "type": "table"
+                    },
+                    {
+                        "description": "how many randomly selected columns should be kept in the output",
+                        "format": "number",
+                        "id": "outColumnCount",
+                        "name": "outColumnCount",
+                        "type": "number"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Keep First Column and Random Others",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "outTable",
+                        "name": "outTable",
+                        "type": "table"
+                    }
+                ],
+                "script": "from random import randint\n#\n# pick random columns out of a table, according to the rowcount passed as an argument.  Always pick the column passed in a control table\n\n# inputs: \n#   table\n#   outRowCount - how many rows to pick from the input table\n#   keepColumns - table with names of columns to keep for sure\n# output: outTable\n\ntableColumnCount = len(table['fields'])\noutColumns = []\n\n# put the columns to keep in the output table.  Assume the first column of the keep table is the column names\n\noutColumns.append(table['fields'][0])\n\n# loop the number of times in the output colun count; selecting a random column each time\nfor i in range(outColumnCount):\n    pickedColumnNumber = randint(0,tableColumnCount-1)\n    pickedColumnName = table['fields'][pickedColumnNumber]\n    if  (pickedColumnName not in outColumns) and (pickedColumnName != table['fields'][0]):\n        print 'chose:',pickedColumnName\n        outColumns.append(pickedColumnName)\n\n# now copy the selected columns to the output\noutTable = {}\noutTable['fields'] = outColumns\noutTable['rows'] = []\n\nfor row in table['rows']:\n    record = {}\n    for column in outColumns:\n        record[column] = row[column]\n    outTable['rows'].append(record)    \n    \n    \n"
+            },
+            "visualization": false,
+            "x": 311,
+            "y": 56
+        },
+        {
+            "girderId": "56c6ed957a773016c6f58afe",
+            "modified": "2016-02-19 10:25:25.356000",
+            "name": "TreeAssignUniformEdgeWeightsIfMissing",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "tree which may or may not have edge weights assigned",
+                        "format": "nested",
+                        "id": "tree",
+                        "name": "tree",
+                        "type": "tree"
+                    }
+                ],
+                "mode": "python",
+                "name": "TreeAssignUniformEdgeWeightsIfMissing",
+                "outputs": [
+                    {
+                        "description": "Tree with edge weights assigned to 1.0 if they were misssing.  Existing edge weights are preserved",
+                        "format": "nested",
+                        "id": "outtree",
+                        "name": "outtree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "nodecount = 0\n\ndef assignEdgeWeightsIfMissing(treenode):\n    global nodecount\n    treenode['node_data']['nodeid'] = nodecount\n    if ('edge_data' not in treenode):\n        treenode['edge_data'] = {}\n    if not ('weight' in treenode['edge_data']):\n        treenode['edge_data']['weight'] = 1.0\n    elif treenode['edge_data']['weight'] < 0.001:\n        treenode['edge_data']['weight'] = 1.0     \n    nodecount += 1\n    # look at the current tree node and see if there are children or not\n    if 'children' in treenode.keys():\n        #case for a hierarchy node, traverse to all the children\n        for node in treenode['children']:\n            assignEdgeWeightsIfMissing(node)\n    \nouttree = tree\nassignEdgeWeightsIfMissing(outtree)\n"
+            },
+            "visualization": false,
+            "x": 429,
+            "y": 216
+        },
+        {
+            "girderId": "56caa44892ccab170bbc56a2",
+            "modified": "2016-02-22 08:46:34.197000",
+            "name": "Make Fake Image cross reference table",
+            "task": {
+                "description": "make a pretend image cross-reference table.  This creates records of images for the species on the tree.  The input table is a single column of species names. that will match the tree names.  ",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "id": "treetips",
+                        "name": "tree tip name list",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Make Fake Image cross reference table",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "outlist",
+                        "name": "Image Xref Table",
+                        "type": "table"
+                    }
+                ],
+                "script": "#\n# make a fake table the references actual image files stored on the SSD attached to Arbor\n\nfrom os import walk\nimport random\n\noutlist = {}\noutlist['fields'] = ['taxon','character','state','image']\noutlist['rows'] = []\n\n# make a list of images from what we have in the directory\n#imagelist = []\n#for (filenames) in walk('/vagrant/app/data/catfish-media'):\n#    imagelist.extend(filenames)\n#    break\n\nfrom os import listdir\nfrom os.path import isfile, join\n\nimage_path = '/vagrant/app/data/catfish-media/'\naccess_prefix = 'http://54.83.20.232:9080/data/catfish-media/'\nimagelist = [f for f in listdir(image_path) if isfile(join(image_path, f))]\nnumimages = len(imagelist)\n\n# now loop through the tree tips and generate a matching record\nfor row in treetips['rows']:\n    taxonname = row['name'].replace('_',' ')\n    imgnumber = random.randint(0, numimages-1)\n    record = {}\n    record['taxon'] = taxonname\n    record['character'] = str(random.randint(1,4))\n    record['state'] = str(random.randint(1,3))\n    record['image'] = access_prefix+str(imagelist[imgnumber])\n    outlist['rows'].append(record)\n    # about 40% of the records get two images\n    if random.randint(0,10)>5:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)\n    # about 20% of the records get an additional image\n    if random.randint(0,10)>7:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)\n        # about 10% of the records get an additional image\n    if random.randint(0,10)>8:\n        record['taxon'] = taxonname\n        record['character'] = str(random.randint(1,4))\n        record['state'] = str(random.randint(1,3))\n        record['image'] = access_prefix+str(imagelist[imgnumber])\n        outlist['rows'].append(record)"
+            },
+            "visualization": false,
+            "x": 642,
+            "y": 383
+        },
+        {
+            "girderId": "56c6ed957a773016c6f58b0d",
+            "modified": "2016-02-19 10:25:25.492000",
+            "name": "Table Replace undefined cells with NA",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "id": "intable",
+                        "name": "Table with possible undefined cells",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Replace undefined cells with NA",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "cleanTable",
+                        "name": "cleanTable",
+                        "type": "table"
+                    }
+                ],
+                "script": "#\n# loop through a table, which could have undefined cells.  If a cell is \n# undefined, assign the cell a value \"NA\", so the column isn't sparse anymore\n#\n\n# inputs:\n#   intable - a table that might have empty cells in it\n#\n# outputs:\n#    cleanTable \n\ncleanTable = {}\ncleanTable['fields'] = intable['fields']\ncleanTable['rows'] = []\n\nfor row in intable['rows']:\n    outrecord = {}\n    #print 'row:',row\n    # loop through all columns, even if they aren't filled in this row\n    for field in intable['fields']:\n        # test if the variable is defined or not\n        if row[field] =='':\n            outrecord[field] = \"NA\"\n        else:\n            outrecord[field] = row[field]\n    cleanTable['rows'].append(outrecord)\n            \n    "
+            },
+            "visualization": false,
+            "x": 822,
+            "y": 55
+        },
+        {
+            "girderId": "56c6ed957a773016c6f58af9",
+            "modified": "2016-02-22 09:51:13.493000",
+            "name": "Convert Morph Matrix to Numeric",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "name": "table",
+                        "type": "table"
+                    },
+                    {
+                        "description": "table with columnHeader header of fields to prevent history substitution",
+                        "format": "rows",
+                        "name": "columnsToIgnore",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Convert Morph Matrix to Numeric",
+                "outputs": [
+                    {
+                        "description": "records of how codes correspond to original values",
+                        "format": "rows",
+                        "name": "legend",
+                        "type": "table"
+                    },
+                    {
+                        "description": "output table (fully numeric)",
+                        "format": "rows",
+                        "name": "outtable",
+                        "type": "table"
+                    }
+                ],
+                "script": "#\n# input: table (a character matrix with a mix of numeric and textual cell entries\n# output: outtable (a matrix where all textual entries have been converted to integers)\n# output: status  (a table describing the processing of the matrix)\n# output: legend (a table that indicates what the integer code means for each value in each column\n#\n\n# algorithm:\n# a dictionary for each input column is maintained.  The dictionary keys are the integers assigned, the values \n# are the original cell values.  This way, this output table can be used as a lookup to restore the table or display \n# with the original entries.  The algorithm uses two passes.  During the first pass, a matching integer code is created for each\n# unique value encountered in each column.  During the second pass, the output table is generated using codes read out from the history\n# mechanism.\n\nstatusTable = {}\nstatusTable['fields'] = ['description','value']\nstatusTable['rows'] = []\n\nlegend = {}\nlegend['fields'] = ['column','original','code']\nlegend['rows'] = []\n\n# values in these columns are not replaced with numeric values\nnameColumns = ['name','species','SPECIES','Species','Scientific Name','scientific name','taxa','taxon']\n\nuniqueValueCount = 0\n\n# loop through the columnsToIgnore table and collect the names of columns we want to preserve in the output without history substitution\nignorefields = []\nfor row in columnsToIgnore['rows']:\n    ignorefields.append(row[columnsToIgnore['fields'][0]])\n    \n    \n# helper function to check for numberic values only \ndef isNumber(s):\n    try:\n        float(s)\n        return True\n    except ValueError:\n        return False\n\n# this routine initializes the history mechanism to have an entry for each column in the input table. Records\n# will be added to each column's dictionary later.\n\nmatchingDict = {}\ndef initEmptyHistory():   \n    global matchingDict\n    matchingDict = {}\n    for column in table['fields']:\n        # start with an empty dictionary for each column\n        matchingDict[column] = {}\n        \n# if a particular entry is already in the dictionary, return True.  Otherwise return False. \ndef entryInHistory(column,value):\n    try:\n        x = matchingDict[column][value]\n        return True\n    except:\n        return False\n    \n    \n# during the first pass through the table, this routine is called to create new codes and \n# store them in a history mechanism (the matchingDict).  The history will be used to output the \n# translated table during the second pass\n\ndef makeHistoryEntry(column,value):\n    global legend\n    global matchingDict\n    global uniqueValueCount\n    newCode = len(matchingDict[column])\n    row = {}\n    row['column'] = column\n    row['original'] = value\n    row['code'] = newCode\n    # store a code in the matching dictionary for this new unique column value\n    matchingDict[column][value] = newCode\n    legend['rows'].append(row)\n    # count how many entries we have overall\n    uniqueValueCount += 1\n\n# return an entry from the history mechanism\ndef getHistory(column,value):\n    global matchingDict\n    return matchingDict[column][value]\n\n# Below is the main loop of the algorithm.  Each pass is listed below.  The first pass accumulates, the second pass \n# generates the output table using numerical code substitution so the output is a purely numerical table. \n\n# First pass: go through the table, record each unique value and assign a code to it.\ninitEmptyHistory()  \nfor row in table['rows']:\n    for column in row:\n        if (column not in ignorefields):\n            if ( not isNumber(row[column]) and not entryInHistory(column,row[column]) and (column not in nameColumns)):\n                # this entry is not a number but is not yet in the history, so add it\n                #print 'adding',row[column],'to history for',column\n                makeHistoryEntry(column,row[column])\n\n# prepare output table with same schema as input table, but empty\nouttable = {}\nouttable['fields'] = table['fields']\nouttable['rows'] = []\n\n# second pass: output numerically coded table\nfor row in table['rows']:\n    outrow = {}\n    for column in row:\n        if entryInHistory(column,row[column]):\n            # if entry in history, substitute for coded value\n            outrow[column] = getHistory(column,row[column])\n        else:\n            # copy original value, this wasn't coded during pass one\n            outrow[column] = row[column]\n    outtable['rows'].append(outrow)    \n\nstatusTable['rows'].append({'description': 'total coding records','value': uniqueValueCount})\n\n            \n            \n            \n"
+            },
+            "visualization": false,
+            "x": 1051,
+            "y": 92
+        }
+    ]
+}
