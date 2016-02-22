@@ -23,6 +23,10 @@ Eventually all functions will be included in [Arbor collections]().
 
 2. *Workflow to mash together beetle tree and data matrix:* The data matrix is at the genus level while the tree is at the species level. The Arbor workflow [beetleDataTreeSmash](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/phytophaga/beetleDataTreeSmash.json) matches the two by extracting genus names from the tree tip labels and then dropping all duplicates from the tree. We then make fake branch lengths and reconstruct ancestral character states on the tree. This workflow includes a few new generally useful Arbor functions for data processing.
 
+![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/inputs_2.png)
+![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/inputs_3.png)
+![acebeetles](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/acebeetles.png)
+
 # Catfishes
 
 1. *Process catfish data matrix and make heatmap view*
