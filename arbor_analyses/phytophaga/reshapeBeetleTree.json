@@ -1,0 +1,8 @@
+{
+    "description": "",
+    "inputs": [],
+    "mode": "r",
+    "name": "reshapeBeetleTree",
+    "outputs": [],
+    "script": "library(ape)\n\nbeetleTree<-collapse.singles(tree)\n\nextractGenus<-function(speciesNames, splitCharacter=\" \") {\n  genus<-character(length=length(speciesNames))\n  tt<-strsplit(speciesNames, split=splitCharacter)\n  for(i in 1:length(speciesNames)) {\n    genus[i]<-tt[[i]][1]\n  }\n  return(genus)\n}\n\ngg<-extractGenus(beetleTree$tip.label)\nbeetleGenus<-gsub(\"'\", \"\", gg)\n\ngenusTree<-beetleTree\ngenusTree$tip.label<-beetleGenus\n\nug<-unique(beetleGenus)\nfoo<-function(x) min(which(beetleGenus==x))\nfirstMatch<-sapply(ug,foo)\ngoodTips<-beetleTree$tip.label[firstMatch]\nbadTips<-beetleTree$tip.label[which(!(beetleTree$tip.label %in% goodTips))]\nminiTree<-drop.tip(beetleTree, badTips)\ng2<-extractGenus(miniTree$tip.label)\nbeetleGenus2<-gsub(\"'\", \"\", g2)\n\nminiTree$tip.label<-beetleGenus2\n\ntd<-make.treedata(miniTree, data)\ntd$phy$edge.length[1:26]<-1\nres<-td$phy\n\n\n\n"
+}

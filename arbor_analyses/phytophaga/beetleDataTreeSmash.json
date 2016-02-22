@@ -1,0 +1,426 @@
+{
+    "connections": [
+        {
+            "input": "phy",
+            "input_step": "takeOutCharacterFromNames",
+            "name": "Input tree"
+        },
+        {
+            "input": "badChar",
+            "input_step": "takeOutCharacterFromNames",
+            "name": "Character to delete from tip labels"
+        },
+        {
+            "input": "phy",
+            "input_step": "extractGenus",
+            "output": "result",
+            "output_step": "takeOutCharacterFromNames"
+        },
+        {
+            "input": "splitChar",
+            "input_step": "extractGenus",
+            "name": "Split character"
+        },
+        {
+            "input": "newNames",
+            "input_step": "renameTreeTips",
+            "output": "result",
+            "output_step": "extractGenus"
+        },
+        {
+            "input": "phy",
+            "input_step": "renameTreeTips",
+            "name": "Input tree"
+        },
+        {
+            "input": "phy",
+            "input_step": "removeDuplicateTipsFromTree",
+            "output": "result",
+            "output_step": "renameTreeTips"
+        },
+        {
+            "input": "table",
+            "input_step": "aceArbor",
+            "name": "table"
+        },
+        {
+            "input": "column",
+            "input_step": "aceArbor",
+            "name": "column"
+        },
+        {
+            "input": "type",
+            "input_step": "aceArbor",
+            "name": "type"
+        },
+        {
+            "input": "method",
+            "input_step": "aceArbor",
+            "name": "method"
+        },
+        {
+            "name": "res",
+            "output": "res",
+            "output_step": "aceArbor"
+        },
+        {
+            "name": "treePlot",
+            "output": "treePlot",
+            "output_step": "aceArbor"
+        },
+        {
+            "input": "phy",
+            "input_step": "Make Fake Branch Lengths",
+            "output": "result",
+            "output_step": "removeDuplicateTipsFromTree"
+        },
+        {
+            "input": "tree",
+            "input_step": "aceArbor",
+            "output": "blphy",
+            "output_step": "Make Fake Branch Lengths"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "format": "r.apetree",
+            "id": "Input tree",
+            "name": "Input tree",
+            "type": "tree",
+            "x": 13,
+            "y": 15
+        },
+        {
+            "format": "text",
+            "id": "Character to delete from tip labels",
+            "name": "Character to delete from tip labels",
+            "type": "string",
+            "x": 9,
+            "y": 222
+        },
+        {
+            "default": {
+                "data": "_",
+                "format": "text",
+                "type": "string"
+            },
+            "description": "Character that separates genus and species names",
+            "format": "text",
+            "id": "Split character",
+            "name": "Split character",
+            "type": "string",
+            "x": 224,
+            "y": 280
+        },
+        {
+            "format": "r.dataframe",
+            "id": "table",
+            "name": "table",
+            "type": "table",
+            "x": 471,
+            "y": 275
+        },
+        {
+            "default": "island",
+            "domain": {
+                "format": "column.names",
+                "input": "table"
+            },
+            "format": "text",
+            "id": "column",
+            "name": "column",
+            "type": "string",
+            "x": 434,
+            "y": 353
+        },
+        {
+            "default": "discrete",
+            "domain": [
+                "discrete",
+                "continuous"
+            ],
+            "format": "text",
+            "id": "type",
+            "name": "type",
+            "type": "string",
+            "x": 465,
+            "y": 447
+        },
+        {
+            "default": "marginal",
+            "domain": [
+                "marginal"
+            ],
+            "format": "text",
+            "id": "method",
+            "name": "method",
+            "type": "string",
+            "x": 536,
+            "y": 476
+        }
+    ],
+    "mode": "workflow",
+    "name": "beetleDataTreeSmash",
+    "outputs": [
+        {
+            "format": "r.dataframe",
+            "id": "res",
+            "name": "res",
+            "type": "table",
+            "x": 937,
+            "y": 306
+        },
+        {
+            "format": "png.base64",
+            "id": "treePlot",
+            "name": "treePlot",
+            "type": "image",
+            "x": 949,
+            "y": 427
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56cb226e4c46532a986fd3c3",
+            "modified": "2016-02-22 15:03:24.784172",
+            "name": "extractGenus",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "default": {
+                            "data": "_",
+                            "format": "text",
+                            "type": "string"
+                        },
+                        "description": "Character that separates genus and species names",
+                        "format": "text",
+                        "id": "splitChar",
+                        "name": "Split character",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "extractGenus",
+                "outputs": [
+                    {
+                        "format": "r.dataframe",
+                        "id": "result",
+                        "name": "Genus Names",
+                        "type": "table"
+                    }
+                ],
+                "script": "extractGenus<-function(speciesNames, splitCharacter=\" \") {\n  genus<-character(length=length(speciesNames))\n  tt<-strsplit(speciesNames, split=splitCharacter)\n  for(i in 1:length(speciesNames)) {\n    genus[i]<-tt[[i]][1]\n  }\n  return(genus)\n}\n\nresult<-extractGenus(phy$tip.label, splitCharacter=splitChar)\nresult<-as.matrix(result)"
+            },
+            "visualization": false,
+            "x": 419,
+            "y": 170
+        },
+        {
+            "girderId": "56cb21774c46532a986fd3b2",
+            "modified": "2016-02-22 14:58:02.634925",
+            "name": "takeOutCharacterFromNames",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "text",
+                        "id": "badChar",
+                        "name": "Character to delete from tip labels",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "takeOutCharacterFromNames",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "result",
+                        "name": "Output tree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "result<-phy\nresult$tip.label<-gsub(badChar, \"\", result$tip.label)"
+            },
+            "visualization": false,
+            "x": 204,
+            "y": 131
+        },
+        {
+            "girderId": "56cb24574c46532a986fd3d9",
+            "modified": "2016-02-22 15:09:41.420163",
+            "name": "renameTreeTips",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "id": "newNames",
+                        "name": "New names",
+                        "type": "table"
+                    }
+                ],
+                "mode": "r",
+                "name": "renameTreeTips",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "result",
+                        "name": "Output tree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "result<-phy\nresult$tip.label<-newNames[,1]"
+            },
+            "visualization": false,
+            "x": 589,
+            "y": 26
+        },
+        {
+            "girderId": "56cb24334c46532a986fd3d8",
+            "modified": "2016-02-22 15:22:12.221660",
+            "name": "removeDuplicateTipsFromTree",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input Tree",
+                        "type": "tree"
+                    }
+                ],
+                "mode": "r",
+                "name": "removeDuplicateTipsFromTree",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "result",
+                        "name": "Output tree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "library(ape)\n\nremoveDuplicateTips<-function(phy) {\n  ug<-unique(phy$tip.label)\n  foo<-function(x) min(which(phy$tip.label==x))\n  firstMatch<-sapply(ug,foo)\n  tipFilter<-1:length(phy$tip.label) %in% firstMatch\n  dropTheseTips<-which(!tipFilter)\n  result<-drop.tip(phy, dropTheseTips)\n  result\n}\nresult<-removeDuplicateTips(phy)"
+            },
+            "visualization": false,
+            "x": 823,
+            "y": 35
+        },
+        {
+            "girderId": "56c432244c465302fc340f23",
+            "modified": "2016-02-17 08:41:08.793000",
+            "name": "aceArbor",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "A Phylogenetic Tree",
+                        "format": "r.apetree",
+                        "name": "tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "name": "table",
+                        "type": "table"
+                    },
+                    {
+                        "default": "island",
+                        "domain": {
+                            "format": "column.names",
+                            "input": "table"
+                        },
+                        "format": "text",
+                        "name": "column",
+                        "type": "string"
+                    },
+                    {
+                        "default": "discrete",
+                        "domain": [
+                            "discrete",
+                            "continuous"
+                        ],
+                        "format": "text",
+                        "name": "type",
+                        "type": "string"
+                    },
+                    {
+                        "default": "marginal",
+                        "domain": [
+                            "marginal"
+                        ],
+                        "format": "text",
+                        "name": "method",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "aceArbor",
+                "outputs": [
+                    {
+                        "format": "r.dataframe",
+                        "name": "res",
+                        "type": "table"
+                    },
+                    {
+                        "format": "png.base64",
+                        "name": "treePlot",
+                        "type": "image"
+                    }
+                ],
+                "script": "library(cardoonTools)\nrequire(aRbor)\n\n\n# Removed this parameter to restore automated use of the analyses from Easy Mode apps\nfont_size <- 1\n\ntd <- make.treedata(tree, table)\ntd1 <- select_(td, column)\noutput <- aceArbor(td1, charType=type, aceType=method)\n\n\nTH <- max(branching.times(td$phy))\n    \n# plot and wrap the result in a PNG for output on the webpage\ntreePlot <- cardoonPlot(expression(plot(output, label.offset=0.05*TH)), width=1000, height=1000, res=100)\ntreePlot <- treePlot$png\n\nres <- output[[1]]    \nnodeLabels<-1:td1$phy$Nnode + length(td1$phy$tip.label)\nres<-cbind(nodeLabels, res)"
+            },
+            "visualization": false,
+            "x": 746,
+            "y": 402
+        },
+        {
+            "girderId": "56c1f89ee41f69033b110486",
+            "modified": "2016-02-15 16:11:10.378000",
+            "name": "Make Fake Branch Lengths",
+            "task": {
+                "inputs": [
+                    {
+                        "description": "Input tree",
+                        "format": "r.apetree",
+                        "name": "phy",
+                        "type": "tree"
+                    }
+                ],
+                "mode": "r",
+                "name": "Make Fake Branch Lengths",
+                "outputs": [
+                    {
+                        "description": "output tree",
+                        "format": "r.apetree",
+                        "name": "blphy",
+                        "type": "tree"
+                    }
+                ],
+                "script": "library(ape)\n\nblphy<-compute.brlen(phy)\nblphy"
+            },
+            "visualization": false,
+            "x": 760,
+            "y": 178
+        }
+    ]
+}
