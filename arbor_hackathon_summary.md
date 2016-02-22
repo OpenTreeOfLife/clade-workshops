@@ -30,6 +30,4 @@ Eventually all functions will be included in [Arbor collections]().
 
 # Barnacles
 
-1. *Method to*
-
-2. *Method to*
+1. *Match tree and tip data, then reconstruct ancestral character states:* The workflow [aceBarnacles](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/barnacles/aceBarnacles.json) makes the barnacle tree ultrametric using [PATHd8](http://www2.math.su.se/PATHd8/), then reconstructs ancestral character states on this ultrametric tree.
