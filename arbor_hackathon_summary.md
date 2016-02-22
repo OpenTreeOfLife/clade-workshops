@@ -18,6 +18,9 @@ Eventually all functions will be included in [Arbor collections]().
 
 1. *Method to pull two study trees from opentree and compare them:* The new Arbor method [pull and compare opentree studies](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/phytophaga/pull%20and%20compare%20opentree%20studies.json) fetches two study trees from open tree of life based on their study id. The workflow then compares the topology of the two trees using the function phylo.diff from the [distory](https://cran.r-project.org/web/packages/distory/index.html) R package.
 
+[inputs](images/inputs1.png)
+[treecompare](images/treematch.png)
+
 2. *Workflow to mash together beetle tree and data matrix:* The data matrix is at the genus level while the tree is at the species level. The Arbor workflow [beetleDataTreeSmash](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/phytophaga/beetleDataTreeSmash.json) matches the two by extracting genus names from the tree tip labels and then dropping all duplicates from the tree. We then make fake branch lengths and reconstruct ancestral character states on the tree. This workflow includes a few new generally useful Arbor functions for data processing.
 
 # Catfishes
