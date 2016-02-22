@@ -1,0 +1,837 @@
+{
+    "filtered_flags": [
+        "major_rank_conflict", 
+        "major_rank_conflict_inherited", 
+        "environmental", 
+        "unclassified_inherited", 
+        "unclassified", 
+        "viral", 
+        "barren", 
+        "not_otu", 
+        "incertae_sedis", 
+        "incertae_sedis_inherited", 
+        "extinct_inherited", 
+        "extinct", 
+        "hidden", 
+        "unplaced", 
+        "unplaced_inherited", 
+        "was_container", 
+        "inconsistent", 
+        "hybrid", 
+        "merged"
+    ], 
+    "date_completed": "2016-02-22 08:51:18", 
+    "sources": [
+        "ot_611_tree1", 
+        "ot_612_tree1", 
+        "ot_616_tree2", 
+        "ot_617_tree1"
+    ], 
+    "num_source_studies": 4, 
+    "root_taxon_name": "", 
+    "generated_by": [
+        {
+            "git_sha": "aaa", 
+            "url": "link", 
+            "version": "x", 
+            "name": "propinquity", 
+            "invocation": "cmd"
+        }, 
+        {
+            "git_sha": "aaa", 
+            "url": "link", 
+            "version": "x", 
+            "name": "peyotl", 
+            "invocation": "cmd"
+        }, 
+        {
+            "git_sha": "aaa", 
+            "url": "link", 
+            "version": "x", 
+            "name": "otcetera", 
+            "invocation": "cmd"
+        }
+    ], 
+    "num_source_trees": 4, 
+    "root_ott_id": 211889, 
+    "source_id_map": {
+        "ot_616_tree2": {
+            "git_sha": "fdad615b09da258283bdf34115594d7f375c3d9d", 
+            "study_id": "ot_616", 
+            "tree_id": "tree2"
+        }, 
+        "ot_617_tree1": {
+            "git_sha": "fdad615b09da258283bdf34115594d7f375c3d9d", 
+            "study_id": "ot_617", 
+            "tree_id": "tree1"
+        }, 
+        "ot_611_tree1": {
+            "git_sha": "fdad615b09da258283bdf34115594d7f375c3d9d", 
+            "study_id": "ot_611", 
+            "tree_id": "tree1"
+        }, 
+        "ot_612_tree1": {
+            "git_sha": "fdad615b09da258283bdf34115594d7f375c3d9d", 
+            "study_id": "ot_612", 
+            "tree_id": "tree1"
+        }
+    }, 
+    "run_time": "30 minutes", 
+    "tree_id": "opentree4.1", 
+    "taxonomy_version": "2.9draft8", 
+    "num_tips": 184, 
+    "nodes": {
+        "mrcaott915952ott5048921": {
+            "terminal": [
+                [
+                    "ot_612_tree1", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott915952"
+                ]
+            ], 
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node20"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node21"
+                ]
+            ]
+        }, 
+        "ott3407773": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048971"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048971"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048971"
+                ]
+            ]
+        }, 
+        "mrcaott4606641ott5048975": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node39"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node22"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node8"
+                ]
+            ]
+        }, 
+        "mrcaott4606641ott5048974": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott4606641"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott4606641"
+                ]
+            ], 
+            "supported_by": [
+                [
+                    "ot_612_tree1", 
+                    "node23"
+                ]
+            ]
+        }, 
+        "ott153849": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott915952"
+                ]
+            ]
+        }, 
+        "ott3407776": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048905"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048905"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048905"
+                ]
+            ]
+        }, 
+        "ott5048923": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048923"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048923"
+                ]
+            ]
+        }, 
+        "ott4606626": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott4606627"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott4606627"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott4606627"
+                ]
+            ]
+        }, 
+        "ott5048920": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048920"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048920"
+                ]
+            ]
+        }, 
+        "ott1099036": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott1046128"
+                ]
+            ]
+        }, 
+        "mrcaott5048904ott5048905": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node9"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node9"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node34"
+                ]
+            ]
+        }, 
+        "ott264009": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott153854"
+                ]
+            ]
+        }, 
+        "ott264007": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott264007"
+                ]
+            ]
+        }, 
+        "mrcaott153854ott5048889": {
+            "terminal": [
+                [
+                    "ot_612_tree1", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott153854"
+                ]
+            ], 
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node36"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node12"
+                ]
+            ]
+        }, 
+        "ott1046128": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott1046128"
+                ]
+            ]
+        }, 
+        "mrcaott5048905ott5048971": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node14"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node39"
+                ]
+            ], 
+            "partial_path_of": [
+                [
+                    "ot_612_tree1", 
+                    "node12"
+                ]
+            ]
+        }, 
+        "ott264003": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott264007"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott264007"
+                ]
+            ]
+        }, 
+        "ott1067616": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott1067616"
+                ]
+            ]
+        }, 
+        "ott4606635": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048904"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048904"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048904"
+                ]
+            ]
+        }, 
+        "mrcaott4606627ott5048876": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node33"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node31"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node15"
+                ]
+            ]
+        }, 
+        "ott4606637": {
+            "terminal": [
+                [
+                    "ot_612_tree1", 
+                    "ott5048974"
+                ]
+            ]
+        }, 
+        "ott5048876": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048876"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048876"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048876"
+                ]
+            ]
+        }, 
+        "mrcaott142446ott1067616": {
+            "supported_by": [
+                [
+                    "ot_617_tree1", 
+                    "node251"
+                ]
+            ]
+        }, 
+        "ott5048919": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048920"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048920"
+                ]
+            ]
+        }, 
+        "ott142447": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott142446"
+                ]
+            ]
+        }, 
+        "ott142446": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott142446"
+                ]
+            ]
+        }, 
+        "ott4606627": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott4606627"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott4606627"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott4606627"
+                ]
+            ]
+        }, 
+        "mrcaott264007ott915952": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node6"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node6"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node20"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "node257"
+                ]
+            ]
+        }, 
+        "ott3407769": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048975"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048975"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048975"
+                ]
+            ]
+        }, 
+        "ott3407760": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048889"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048889"
+                ]
+            ]
+        }, 
+        "ott153854": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott153854"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott153854"
+                ]
+            ]
+        }, 
+        "ott5048971": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048971"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048971"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048971"
+                ]
+            ]
+        }, 
+        "mrcaott142446ott153854": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node32"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node29"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node11"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "node250"
+                ]
+            ]
+        }, 
+        "ott3407761": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048876"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048876"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048876"
+                ]
+            ]
+        }, 
+        "mrcaott5048905ott5048920": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node10"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node38"
+                ]
+            ], 
+            "partial_path_of": [
+                [
+                    "ot_612_tree1", 
+                    "node12"
+                ]
+            ]
+        }, 
+        "ott5048889": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048889"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048889"
+                ]
+            ]
+        }, 
+        "ott4606641": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott4606641"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott4606641"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott4606641"
+                ]
+            ]
+        }, 
+        "mrcaott142446ott1046128": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node31"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node21"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node7"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "node249"
+                ]
+            ]
+        }, 
+        "ott4606634": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048923"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048923"
+                ]
+            ]
+        }, 
+        "ott5048974": {
+            "terminal": [
+                [
+                    "ot_612_tree1", 
+                    "ott5048974"
+                ]
+            ]
+        }, 
+        "ott4606630": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048921"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048921"
+                ]
+            ]
+        }, 
+        "ott5048975": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048975"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048975"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048975"
+                ]
+            ]
+        }, 
+        "mrcaott264007ott5048904": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott264007"
+                ]
+            ], 
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node7"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "node7"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node32"
+                ]
+            ]
+        }, 
+        "ott4606640": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott4606641"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott4606641"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott4606641"
+                ]
+            ]
+        }, 
+        "ott5048921": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048921"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048921"
+                ]
+            ]
+        }, 
+        "mrcaott5048921ott5048923": {
+            "supported_by": [
+                [
+                    "ot_611_tree1", 
+                    "node28"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "node24"
+                ]
+            ]
+        }, 
+        "ott728430": {
+            "terminal": [
+                [
+                    "ot_617_tree1", 
+                    "ott1067616"
+                ]
+            ]
+        }, 
+        "ott5048905": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048905"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048905"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048905"
+                ]
+            ]
+        }, 
+        "ott5048904": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott5048904"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott5048904"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott5048904"
+                ]
+            ]
+        }, 
+        "ott915952": {
+            "terminal": [
+                [
+                    "ot_611_tree1", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_612_tree1", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_616_tree2", 
+                    "ott915952"
+                ], 
+                [
+                    "ot_617_tree1", 
+                    "ott915952"
+                ]
+            ]
+        }
+    }
+}
