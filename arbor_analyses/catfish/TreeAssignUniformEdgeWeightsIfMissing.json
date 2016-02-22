@@ -1,0 +1,24 @@
+{
+    "description": "",
+    "inputs": [
+        {
+            "description": "tree which may or may not have edge weights assigned",
+            "format": "nested",
+            "id": "tree",
+            "name": "tree",
+            "type": "tree"
+        }
+    ],
+    "mode": "python",
+    "name": "TreeAssignUniformEdgeWeightsIfMissing",
+    "outputs": [
+        {
+            "description": "Tree with edge weights assigned to 1.0 if they were misssing.  Existing edge weights are preserved",
+            "format": "nested",
+            "id": "outtree",
+            "name": "outtree",
+            "type": "tree"
+        }
+    ],
+    "script": "nodecount = 0\n\ndef assignEdgeWeightsIfMissing(treenode):\n    global nodecount\n    treenode['node_data']['nodeid'] = nodecount\n    if ('edge_data' not in treenode):\n        treenode['edge_data'] = {}\n    if not ('weight' in treenode['edge_data']):\n        treenode['edge_data']['weight'] = 1.0\n    elif treenode['edge_data']['weight'] < 0.001:\n        treenode['edge_data']['weight'] = 1.0     \n    nodecount += 1\n    # look at the current tree node and see if there are children or not\n    if 'children' in treenode.keys():\n        #case for a hierarchy node, traverse to all the children\n        for node in treenode['children']:\n            assignEdgeWeightsIfMissing(node)\n    \nouttree = tree\nassignEdgeWeightsIfMissing(outtree)\n"
+}

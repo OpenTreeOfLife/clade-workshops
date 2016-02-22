@@ -1,0 +1,105 @@
+{
+    "connections": [
+        {
+            "input": "study_id",
+            "input_step": "Return OpenTree tree from study",
+            "name": "study_id"
+        },
+        {
+            "input": "nexusTree",
+            "input_step": "plot from Nexus",
+            "output": "treeNewickString",
+            "output_step": "Return OpenTree tree from study"
+        },
+        {
+            "name": "treePlot",
+            "output": "treePlot",
+            "output_step": "plot from Nexus"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "format": "text",
+            "id": "study_id",
+            "name": "study_id",
+            "type": "string",
+            "x": 118,
+            "y": 86
+        }
+    ],
+    "mode": "workflow",
+    "name": "Return OpenTree tree and plot",
+    "outputs": [
+        {
+            "format": "png.base64",
+            "id": "treePlot",
+            "name": "treePlot",
+            "type": "image",
+            "x": 960,
+            "y": 71
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56c8c06a4c46532a986fd22c",
+            "modified": "2016-02-20 20:26:10.874085",
+            "name": "Return OpenTree tree from study",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "study_id",
+                        "name": "study_id",
+                        "type": "string"
+                    }
+                ],
+                "mode": "python",
+                "name": "Return OpenTree tree from study",
+                "outputs": [
+                    {
+                        "format": "text",
+                        "id": "treeNewickString",
+                        "name": "treeNewickString",
+                        "type": "string"
+                    }
+                ],
+                "script": "import requests\n\nresp = requests.post('http://api.opentreeoflife.org/phylesystem/v1/study/'+study_id+'.nex')\ntree = resp.text\n\n# tree as a string to preview \ntreeNewickString = tree\n"
+            },
+            "visualization": false,
+            "x": 361,
+            "y": 88
+        },
+        {
+            "girderId": "56c8cc1b4c46532a986fd279",
+            "modified": "2016-02-20 21:01:16.897000",
+            "name": "plot from Nexus",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "nexusTree",
+                        "name": "nexusTree",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "plot from Nexus",
+                "outputs": [
+                    {
+                        "format": "png.base64",
+                        "id": "treePlot",
+                        "name": "treePlot",
+                        "type": "image"
+                    }
+                ],
+                "script": "\nlibrary(cardoonTools)\nrequire(geiger)\n\nTfile <- file()\ncat(nexusTree, file=Tfile)\nphy<-read.nexus(file=Tfile)\n\n# plot and wrap the result in a PNG for output on the webpage\ntreePlot <- cardoonPlot(expression(plot(phy)), width=1000, height=1000, res=100)\ntreePlot <- treePlot$png\n"
+            },
+            "visualization": false,
+            "x": 628,
+            "y": 73
+        }
+    ]
+}

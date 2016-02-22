@@ -1,0 +1,258 @@
+{
+    "connections": [
+        {
+            "input": "study_id",
+            "input_step": "Return OpenTree tree from study",
+            "name": "study_id_1"
+        },
+        {
+            "input": "study_id",
+            "input_step": "Return OpenTree tree from study 1",
+            "name": "study_id_2"
+        },
+        {
+            "name": "Tree Comparison",
+            "output": "treeComparePlot",
+            "output_step": "compareTrees"
+        },
+        {
+            "input": "nexusTree",
+            "input_step": "convert nexus string to ape phylo 1",
+            "output": "treeNewickString",
+            "output_step": "Return OpenTree tree from study 1"
+        },
+        {
+            "input": "nexusTree",
+            "input_step": "convert nexus string to ape phylo",
+            "output": "treeNewickString",
+            "output_step": "Return OpenTree tree from study"
+        },
+        {
+            "input": "t1",
+            "input_step": "compareTrees",
+            "output": "phy",
+            "output_step": "convert nexus string to ape phylo"
+        },
+        {
+            "input": "t2",
+            "input_step": "compareTrees",
+            "output": "phy",
+            "output_step": "convert nexus string to ape phylo 1"
+        },
+        {
+            "name": "phy 2",
+            "output": "phy",
+            "output_step": "convert nexus string to ape phylo 1"
+        },
+        {
+            "name": "phy 1",
+            "output": "phy",
+            "output_step": "convert nexus string to ape phylo"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "format": "text",
+            "id": "study_id_1",
+            "name": "study_id_1",
+            "type": "string",
+            "x": 22,
+            "y": 40
+        },
+        {
+            "format": "text",
+            "id": "study_id_2",
+            "name": "study_id_2",
+            "type": "string",
+            "x": 26,
+            "y": 239
+        }
+    ],
+    "mode": "workflow",
+    "name": "pull and compare opentree studies",
+    "outputs": [
+        {
+            "format": "png.base64",
+            "id": "Tree Comparison",
+            "name": "Tree Comparison",
+            "type": "image",
+            "x": 995,
+            "y": 88
+        },
+        {
+            "format": "r.apetree",
+            "id": "phy 2",
+            "name": "phy 2",
+            "type": "tree",
+            "x": 785,
+            "y": 277
+        },
+        {
+            "format": "r.apetree",
+            "id": "phy 1",
+            "name": "phy 1",
+            "type": "tree",
+            "x": 763,
+            "y": 6
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56c8c06a4c46532a986fd22c",
+            "modified": "2016-02-20 21:31:18.686000",
+            "name": "Return OpenTree tree from study",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "study_id",
+                        "name": "study_id",
+                        "type": "string"
+                    }
+                ],
+                "mode": "python",
+                "name": "Return OpenTree tree from study",
+                "outputs": [
+                    {
+                        "format": "text",
+                        "id": "treeNewickString",
+                        "name": "treeNewickString",
+                        "type": "string"
+                    }
+                ],
+                "script": "import requests\n\nresp = requests.get('https://api.opentreeoflife.org/v2/study/'+study_id+'.nex')\ntree = resp.text\n\n# tree as a string to preview \ntreeNewickString = tree\n"
+            },
+            "visualization": false,
+            "x": 294,
+            "y": 62
+        },
+        {
+            "girderId": "56c8c06a4c46532a986fd22c",
+            "modified": "2016-02-20 21:31:18.686000",
+            "name": "Return OpenTree tree from study 1",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "study_id",
+                        "name": "study_id",
+                        "type": "string"
+                    }
+                ],
+                "mode": "python",
+                "name": "Return OpenTree tree from study",
+                "outputs": [
+                    {
+                        "format": "text",
+                        "id": "treeNewickString",
+                        "name": "treeNewickString",
+                        "type": "string"
+                    }
+                ],
+                "script": "import requests\n\nresp = requests.get('https://api.opentreeoflife.org/v2/study/'+study_id+'.nex')\ntree = resp.text\n\n# tree as a string to preview \ntreeNewickString = tree\n"
+            },
+            "visualization": false,
+            "x": 295,
+            "y": 204
+        },
+        {
+            "girderId": "56c8d45e4c46532a986fd2a2",
+            "modified": "2016-02-20 21:03:08.795394",
+            "name": "convert nexus string to ape phylo",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "nexusTree",
+                        "name": "nexusTree",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "convert nexus string to ape phylo",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "phy",
+                        "type": "tree"
+                    }
+                ],
+                "script": "require(ape)\n\nTfile <- file()\ncat(nexusTree, file=Tfile)\nphy<-read.nexus(file=Tfile)\n"
+            },
+            "visualization": false,
+            "x": 521,
+            "y": 46
+        },
+        {
+            "girderId": "56c8d45e4c46532a986fd2a2",
+            "modified": "2016-02-20 21:03:08.795394",
+            "name": "convert nexus string to ape phylo 1",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "text",
+                        "id": "nexusTree",
+                        "name": "nexusTree",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "convert nexus string to ape phylo",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "phy",
+                        "type": "tree"
+                    }
+                ],
+                "script": "require(ape)\n\nTfile <- file()\ncat(nexusTree, file=Tfile)\nphy<-read.nexus(file=Tfile)\n"
+            },
+            "visualization": false,
+            "x": 530,
+            "y": 227
+        },
+        {
+            "girderId": "56c8bacd4c46532a986fd1c5",
+            "modified": "2016-02-20 20:10:41.258463",
+            "name": "compareTrees",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "t1",
+                        "name": "t1",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.apetree",
+                        "id": "t2",
+                        "name": "t2",
+                        "type": "tree"
+                    }
+                ],
+                "mode": "r",
+                "name": "compareTrees",
+                "outputs": [
+                    {
+                        "format": "png.base64",
+                        "id": "treeComparePlot",
+                        "name": "Tree Comparison",
+                        "type": "image"
+                    }
+                ],
+                "script": "# inputs:\n# t1: a tree\n# t2: another tree\n# output: a plot\n\nlibrary(cardoonTools)\nrequire(geiger)\nrequire(distory)\n\n\n# plot and wrap the result in a PNG for output on the webpage\ntreeComparePlot <- cardoonPlot(expression(phylo.diff(t1, t2)), width=1000, height=1000, res=100)\ntreeComparePlot <- treeComparePlot$png\n"
+            },
+            "visualization": false,
+            "x": 750,
+            "y": 138
+        }
+    ]
+}

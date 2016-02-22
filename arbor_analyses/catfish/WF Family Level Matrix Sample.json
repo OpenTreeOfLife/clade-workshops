@@ -1,0 +1,349 @@
+{
+    "connections": [
+        {
+            "input": "table",
+            "input_step": "Table Keep First Column and Random Others",
+            "name": "table"
+        },
+        {
+            "input": "outColumnCount",
+            "input_step": "Table Keep First Column and Random Others",
+            "name": "outColumnCount"
+        },
+        {
+            "input": "newNameTable",
+            "input_step": "Replace Name Of First Column",
+            "name": "inTable2"
+        },
+        {
+            "input": "inTable2",
+            "input_step": "Append Columns According to Parameter Table",
+            "name": "inTable2 1"
+        },
+        {
+            "input": "parameterTable",
+            "input_step": "Append Columns According to Parameter Table",
+            "name": "inTable2"
+        },
+        {
+            "input": "intable",
+            "input_step": "Table Replace undefined cells with NA",
+            "output": "outtable",
+            "output_step": "Replace Name Of First Column"
+        },
+        {
+            "input": "inTable1",
+            "input_step": "Append Columns According to Parameter Table",
+            "output": "cleanTable",
+            "output_step": "Table Replace undefined cells with NA"
+        },
+        {
+            "input": "table",
+            "input_step": "Aggregate Table By Column in Parameter Table",
+            "output": "outTable",
+            "output_step": "Append Columns According to Parameter Table"
+        },
+        {
+            "input": "columnTable",
+            "input_step": "Aggregate Table By Column in Parameter Table",
+            "name": "parameter table containing a column name "
+        },
+        {
+            "name": "output",
+            "output": "output",
+            "output_step": "Aggregate Table By Column in Parameter Table"
+        },
+        {
+            "input": "datatable",
+            "input_step": "Table Remove Ontology Name Prefixes",
+            "output": "outTable",
+            "output_step": "Table Keep First Column and Random Others"
+        },
+        {
+            "input": "datatable",
+            "input_step": "Replace Name Of First Column",
+            "output": "outtable",
+            "output_step": "Table Remove Ontology Name Prefixes"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "format": "rows",
+            "id": "table",
+            "name": "table",
+            "type": "table",
+            "x": 4,
+            "y": 77
+        },
+        {
+            "description": "how many randomly selected columns should be kept in the output",
+            "format": "number",
+            "id": "outColumnCount",
+            "name": "outColumnCount",
+            "type": "number",
+            "x": 3,
+            "y": 193
+        },
+        {
+            "description": "keep_taxon_label table here",
+            "format": "rows",
+            "id": "inTable2",
+            "name": "\"taxon_label\" table to align names",
+            "type": "table",
+            "x": 1,
+            "y": 429
+        },
+        {
+            "description": "second table to be joined",
+            "format": "rows",
+            "id": "inTable2 1",
+            "name": "Family for Taxon lookup table",
+            "type": "table",
+            "x": 5,
+            "y": 310
+        },
+        {
+            "format": "rows",
+            "id": "parameter table containing a column name ",
+            "name": "family_label parameter table: aggregate by families",
+            "type": "table",
+            "x": 18,
+            "y": 567
+        }
+    ],
+    "mode": "workflow",
+    "name": "WF Family Level Matrix Sample",
+    "outputs": [
+        {
+            "description": "aggregated table output",
+            "format": "rows",
+            "id": "output",
+            "name": "Family level trait matrix",
+            "type": "table",
+            "x": 1547,
+            "y": 219
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56c646a656c02c0695a1ed16",
+            "modified": "2016-02-18 22:38:20.382000",
+            "name": "Table Keep First Column and Random Others",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "id": "table",
+                        "name": "table",
+                        "type": "table"
+                    },
+                    {
+                        "description": "how many randomly selected columns should be kept in the output",
+                        "format": "number",
+                        "id": "outColumnCount",
+                        "name": "outColumnCount",
+                        "type": "number"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Keep First Column and Random Others",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "outTable",
+                        "name": "outTable",
+                        "type": "table"
+                    }
+                ],
+                "script": "from random import randint\n#\n# pick random columns out of a table, according to the rowcount passed as an argument.  Always pick the column passed in a control table\n\n# inputs: \n#   table\n#   outRowCount - how many rows to pick from the input table\n#   keepColumns - table with names of columns to keep for sure\n# output: outTable\n\ntableColumnCount = len(table['fields'])\noutColumns = []\n\n# put the columns to keep in the output table.  Assume the first column of the keep table is the column names\n\noutColumns.append(table['fields'][0])\n\n# loop the number of times in the output colun count; selecting a random column each time\nfor i in range(outColumnCount):\n    pickedColumnNumber = randint(0,tableColumnCount-1)\n    pickedColumnName = table['fields'][pickedColumnNumber]\n    if  (pickedColumnName not in outColumns) and (pickedColumnName != table['fields'][0]):\n        print 'chose:',pickedColumnName\n        outColumns.append(pickedColumnName)\n\n# now copy the selected columns to the output\noutTable = {}\noutTable['fields'] = outColumns\noutTable['rows'] = []\n\nfor row in table['rows']:\n    record = {}\n    for column in outColumns:\n        record[column] = row[column]\n    outTable['rows'].append(record)    \n    \n    \n"
+            },
+            "visualization": false,
+            "x": 251,
+            "y": 141
+        },
+        {
+            "girderId": "56c66e9556c02c0695a1ed42",
+            "modified": "2016-02-19 01:23:33.089027",
+            "name": "Replace Name Of First Column",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "table whose first column will be renamed",
+                        "format": "rows",
+                        "id": "datatable",
+                        "name": "datatable",
+                        "type": "table"
+                    },
+                    {
+                        "description": "single row, single column table containing the new name in its only cell",
+                        "format": "rows",
+                        "id": "newNameTable",
+                        "name": "newNameTable",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Replace Name Of First Column",
+                "outputs": [
+                    {
+                        "description": "table with updated first column name",
+                        "format": "rows",
+                        "id": "outtable",
+                        "name": "outtable",
+                        "type": "table"
+                    }
+                ],
+                "script": "\n# replace the first column of a large table with a column name passed in a parameter table.  This \n# method doesn't care what value the first column has, it is changed to the passed name.  This is \n# useful in cases where column names are automatically created from taxonomies and have unknown or\n# dataset specific prefixes.\n\n# input: datatable - data table with lots of columns (relatively speaking)\n# input: newNameTable - single column, single row table containing the new name\n# output: outtable  \n\ninfields = datatable['fields']\n\n\noutfields = []\n\nrowOfNewNameTable = newNameTable['rows'][0]\nnewName = rowOfNewNameTable[newNameTable['fields'][0]]\n\nfor field in infields:\n    if field == datatable['fields'][0]:\n        outfields.append(newName)\n    else:\n        outfields.append(field)\n        \n\n# now loop through the source table and change the fieldname\n\noutrows = []\nfor row in datatable['rows']:\n    outrow = {}\n    for field in infields:\n        if field == datatable['fields'][0]:\n            outrow[newName] = row[field]\n        else:\n            outrow[field] = row[field]\n    outrows.append(outrow)\n        \nouttable = {}\nouttable['fields'] = outfields\nouttable['rows'] = outrows\n"
+            },
+            "visualization": false,
+            "x": 743,
+            "y": 103
+        },
+        {
+            "girderId": "56c668e156c02c0695a1ed31",
+            "modified": "2016-02-19 02:10:53.554000",
+            "name": "Append Columns According to Parameter Table",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "first input table to be joined",
+                        "format": "rows",
+                        "id": "inTable1",
+                        "name": "inTable1",
+                        "type": "table"
+                    },
+                    {
+                        "description": "second table to be joined",
+                        "format": "rows",
+                        "id": "inTable2",
+                        "name": "inTable2",
+                        "type": "table"
+                    },
+                    {
+                        "description": "single row, single column table containing the field name to use for a join",
+                        "format": "rows",
+                        "id": "parameterTable",
+                        "name": "parameterTable",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Append Columns According to Parameter Table",
+                "outputs": [
+                    {
+                        "description": "table containing columns from both input tables",
+                        "format": "rows",
+                        "id": "outTable",
+                        "name": "outTable",
+                        "type": "table"
+                    }
+                ],
+                "script": "\n# input: inTable1 - a list of rows (2D table)\n# input: inTable2 = a second list of rows\n# input: parameterTable - an single column, single row table containing the field name to use for the table join\n# output: outTable\n\n# merge the columns together.  This analysis assumes that each table has a \n\noutTable = {}\n\n# look up the column name by returning the first column of the first row of the table\nindexColumn = parameterTable['rows'][0][parameterTable['fields'][0]]\n        \n# prepare for the output table format of table:rows        \ncolumnHeaders1 = inTable1['fields']\ncolumnHeaders2 = inTable2['fields']\n\noutRows = []\noutColumns = []\n\n# use the first table as the master.  Iterate through all of its rows and use the value of the index \n# column to select the proper row in the second table, so the additional attributes can be merged into the output\nfor i in range(len(inTable1['rows'])):\n    foundMatch = False\n    row = inTable1['rows'][i]\n    for j in range(len(inTable2['rows'])):\n        # the matrix might have missing values, so treat these as non-matching\n        try:\n            if inTable2['rows'][j][indexColumn] == row[indexColumn]:\n                foundMatch = True\n                # this row from table2 matches, so loop through its entries and add them to the output row\n                for k in inTable2['rows'][j]:\n                    row[k] = inTable2['rows'][j][k]\n                    break;\n        except:\n            pass\n    if foundMatch:\n        outRows.append(row)\n    \n# now fix the column headers to be the union of both sets of input column headers\n\nfor i in columnHeaders1:\n    if i not in outColumns:\n        outColumns.append(i)\n\nfor i in columnHeaders2:\n    if i not in outColumns:\n        outColumns.append(i)\n        \noutTable = {'fields': outColumns,'rows':outRows}"
+            },
+            "visualization": false,
+            "x": 1199,
+            "y": 264
+        },
+        {
+            "girderId": "56c67df956c02c0695a1ed75",
+            "modified": "2016-02-19 03:05:19.469711",
+            "name": "Table Replace undefined cells with NA",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "rows",
+                        "id": "intable",
+                        "name": "Table with possible undefined cells",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Replace undefined cells with NA",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "cleanTable",
+                        "name": "cleanTable",
+                        "type": "table"
+                    }
+                ],
+                "script": "#\n# loop through a table, which could have undefined cells.  If a cell is \n# undefined, assign the cell a value \"NA\", so the column isn't sparse anymore\n#\n\n# inputs:\n#   intable - a table that might have empty cells in it\n#\n# outputs:\n#    cleanTable \n\ncleanTable = {}\ncleanTable['fields'] = intable['fields']\ncleanTable['rows'] = []\n\nfor row in intable['rows']:\n    outrecord = {}\n    print 'row:',row\n    # loop through all columns, even if they aren't filled in this row\n    for field in intable['fields']:\n        # test if the variable is defined or not\n        if row[field] =='':\n            outrecord[field] = \"NA\"\n        else:\n            outrecord[field] = row[field]\n    cleanTable['rows'].append(outrecord)\n            \n    "
+            },
+            "visualization": false,
+            "x": 977,
+            "y": 157
+        },
+        {
+            "girderId": "56c674ae56c02c0695a1ed43",
+            "modified": "2016-02-19 01:56:01.578000",
+            "name": "Aggregate Table By Column in Parameter Table",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "input table to be grouped by one column's discrete values",
+                        "format": "rows",
+                        "name": "table",
+                        "type": "table"
+                    },
+                    {
+                        "format": "rows",
+                        "id": "columnTable",
+                        "name": "parameter table containing a column name ",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Aggregate Table By Column in Parameter Table",
+                "outputs": [
+                    {
+                        "description": "aggregated table output",
+                        "format": "rows",
+                        "name": "output",
+                        "type": "table"
+                    }
+                ],
+                "script": "# roll up the values of a table's rows according to discrete values in a selected \"groupBy\" column.  \n# The number of output rows in the table will be equal to the number of discrete values in the \n# groupBy column.  The values in the other columns will be the average of the values of all rows which\n# belonged to this group from the input table.   Therefore, this is a simple aggregation by one column.\n\n# input: table - input table of continuous values\n# input: columnTable - column name used as the \"group by\" control is in this single row, single column table\n# output: output - output table \n\n# pull out the column name from the parameter table (first value of first row)\ncolumn = columnTable['rows'][0][columnTable['fields'][0]]\n\n# helper function to check for numberic values only \ndef is_number(s):\n    try:\n        float(s)\n        return True\n    except ValueError:\n        return False\n\n\n# loop through the control column and build a list of the discrete values it contains\nvaluelist = []\nfor row in table['rows']:\n    if row[column] not in valuelist:\n        valuelist.append(row[column])\n\noutputrows = []\n    \n# now loop through the entire table once for each \"class\" and sum up the values for each attribute in order\n# to calculate the average value for each continuous variable for each class by accumulating the values for each\n# attribute and dividing by the number of entires in each class.\n\nfor classValue in valuelist:\n    sumobject = {}\n    classMemberCount = 0\n    # initialize an empty summation object\n    for field in table['fields']:\n        sumobject[field] = 0.0\n    # now loop through this class's entries and accumulate values\n    for row in table['rows']:\n       if (row[column] == classValue):\n           # this row is a member of the current class, so add its contribution and update the count of class members\n            for attrib in row:\n                # if this is a continuous variable, accumulate.  If it is not numberic, just copy it across\n                if is_number(row[attrib]):\n                    # make sure the previous accumulations are also numbers\n                    if is_number(sumobject[attrib]):\n                        sumobject[attrib] += float(row[attrib])\n                else:\n                    #if this is non-numeric, just copy it, unless it is 'NA'.  Also if length=0, don't copy to ignore empty cells\n                    if (row[attrib] != \"NA\") and (len(row[attrib]) != 0):\n                        sumobject[attrib] = row[attrib]\n            classMemberCount += 1\n    # create the output row corresponding to this class by dividing the accumulated sums by the number of members\n    # in each class\n    outrow = {}\n    for field in sumobject:\n        if is_number(sumobject[field]):\n            outrow[field] = sumobject[field]/classMemberCount\n        else:\n            # if this field is a non-numeric value, just copy it across instead of averaging\n            outrow[field] = sumobject[field]\n    outputrows.append(outrow)\n        \n# create an output table in the table:rows format by creating a list of the fields and a list of the table rows\noutput = {}\noutput['fields'] = table['fields']\noutput['rows'] = outputrows\n\n"
+            },
+            "visualization": false,
+            "x": 1416,
+            "y": 390
+        },
+        {
+            "girderId": "56c8c22992ccab03397bbc10",
+            "modified": "2016-02-21 03:46:57.551454",
+            "name": "Table Remove Ontology Name Prefixes",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "description": "data table with long column names",
+                        "format": "rows",
+                        "id": "datatable",
+                        "name": "matrix input with ontology prefix",
+                        "type": "table"
+                    }
+                ],
+                "mode": "python",
+                "name": "Table Remove Ontology Name Prefixes",
+                "outputs": [
+                    {
+                        "format": "rows",
+                        "id": "outtable",
+                        "name": "matrix with shorter column names",
+                        "type": "table"
+                    }
+                ],
+                "script": "# replace the names of all columns with simpler names.  This method assumes that each column name has a prefix with \n# 5 prefixes separated by dots \n\n# input: datatable - data table with long column names\n# output: outtable  \n\ninfields = datatable['fields']\n\noutfields = []\n\nnameMapping = {}\n\n# first build up a dictionary indexed by the previous string\nfor field in infields:\n    currentField = field\n    for count in range(5):\n        # see if there is a prefix left to delete\n        if \".\" in currentField:\n            currentField  = currentField[currentField.index(\".\")+1:]\n        else:\n            pass\n    nameMapping[field] = currentField\n    outfields.append(currentField)\n        \n# now loop through the source table and change the fieldnames when writing\n# the output\n\noutrows = []\nfor row in datatable['rows']:\n    outrow = {}\n    for field in infields:\n        # write out the fields using the new name for each attribute\n        outrow[nameMapping[field]] = row[field]\n    outrows.append(outrow)\n        \nouttable = {}\nouttable['fields'] = outfields\nouttable['rows'] = outrows\n"
+            },
+            "visualization": false,
+            "x": 461,
+            "y": 41
+        }
+    ]
+}
