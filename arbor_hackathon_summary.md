@@ -27,6 +27,13 @@ Eventually all functions will be included in [Arbor collections](https://github.
 ![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/inputs_3.png)
 ![acebeetles](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/acebeetles.png)
 
+3. *Workflow to make cophylogeny plot of beetles and hosts:* The team provided us with a tree of beetle genera and a tree of their hosts.
+![cophyloflow](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophyloflow.png)
+The Arbor workflow [phytoTangleTree](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/phytophaga/phytoTangleTree.json) matches the two trees by dropping an underscore character and extracting genus names. We then remove any rows from the matrix that don't match both trees, and plot using the function cophylo from phytools.
+
+![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophyloinputs.png)
+![cophylo](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophylo.png)
+
 # Catfishes
 
 1. *Process catfish data matrix and make heatmap view*
