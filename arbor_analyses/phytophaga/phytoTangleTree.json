@@ -1,0 +1,381 @@
+{
+    "connections": [
+        {
+            "input": "phy",
+            "input_step": "extractGenus",
+            "name": "Input tree"
+        },
+        {
+            "input": "splitChar",
+            "input_step": "extractGenus",
+            "name": "Split character"
+        },
+        {
+            "input": "phy",
+            "input_step": "renameTreeTips",
+            "name": "Input tree"
+        },
+        {
+            "input": "newNames",
+            "input_step": "renameTreeTips",
+            "output": "result",
+            "output_step": "extractGenus"
+        },
+        {
+            "input": "phy",
+            "input_step": "extractGenus 1",
+            "name": "Input tree 1"
+        },
+        {
+            "input": "splitChar",
+            "input_step": "extractGenus 1",
+            "name": "Split character"
+        },
+        {
+            "input": "phy",
+            "input_step": "renameTreeTips 1",
+            "name": "Input tree 1"
+        },
+        {
+            "input": "newNames",
+            "input_step": "renameTreeTips 1",
+            "output": "result",
+            "output_step": "extractGenus 1"
+        },
+        {
+            "input": "tree1",
+            "input_step": "removeNonMatchingAssoc",
+            "output": "result",
+            "output_step": "renameTreeTips"
+        },
+        {
+            "input": "tree2",
+            "input_step": "removeNonMatchingAssoc",
+            "output": "result",
+            "output_step": "renameTreeTips 1"
+        },
+        {
+            "input": "assoc",
+            "input_step": "removeNonMatchingAssoc",
+            "name": "Associations"
+        },
+        {
+            "input": "t1",
+            "input_step": "cophylo",
+            "output": "result",
+            "output_step": "renameTreeTips"
+        },
+        {
+            "input": "t2",
+            "input_step": "cophylo",
+            "output": "result",
+            "output_step": "renameTreeTips 1"
+        },
+        {
+            "input": "assoc",
+            "input_step": "cophylo",
+            "output": "newAssoc",
+            "output_step": "removeNonMatchingAssoc"
+        },
+        {
+            "name": "cophylogeny plot",
+            "output": "cophyloPlot",
+            "output_step": "cophylo"
+        }
+    ],
+    "description": "",
+    "inputs": [
+        {
+            "format": "r.apetree",
+            "id": "Input tree",
+            "name": "Input tree",
+            "type": "tree",
+            "x": -5,
+            "y": 19
+        },
+        {
+            "default": {
+                "data": "_",
+                "format": "text",
+                "type": "string"
+            },
+            "description": "Character that separates genus and species names",
+            "format": "text",
+            "id": "Split character",
+            "name": "Split character",
+            "type": "string",
+            "x": -2,
+            "y": 184
+        },
+        {
+            "format": "r.apetree",
+            "id": "Input tree 1",
+            "name": "Input tree 1",
+            "type": "tree",
+            "x": -6,
+            "y": 313
+        },
+        {
+            "format": "r.dataframe",
+            "id": "Associations",
+            "name": "Associations",
+            "type": "table",
+            "x": 502,
+            "y": 401
+        }
+    ],
+    "mode": "workflow",
+    "name": "phytoTangleTree",
+    "outputs": [
+        {
+            "format": "png.base64",
+            "id": "cophylogeny plot",
+            "name": "cophylogeny plot",
+            "type": "image",
+            "x": 936,
+            "y": 87
+        }
+    ],
+    "steps": [
+        {
+            "girderId": "56cb226e4c46532a986fd3c3",
+            "modified": "2016-02-22 15:03:24.784000",
+            "name": "extractGenus",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "default": {
+                            "data": "_",
+                            "format": "text",
+                            "type": "string"
+                        },
+                        "description": "Character that separates genus and species names",
+                        "format": "text",
+                        "id": "splitChar",
+                        "name": "Split character",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "extractGenus",
+                "outputs": [
+                    {
+                        "format": "r.dataframe",
+                        "id": "result",
+                        "name": "Genus Names",
+                        "type": "table"
+                    }
+                ],
+                "script": "extractGenus<-function(speciesNames, splitCharacter=\" \") {\n  genus<-character(length=length(speciesNames))\n  tt<-strsplit(speciesNames, split=splitCharacter)\n  for(i in 1:length(speciesNames)) {\n    genus[i]<-tt[[i]][1]\n  }\n  return(genus)\n}\n\nresult<-extractGenus(phy$tip.label, splitCharacter=splitChar)\nresult<-as.matrix(result)"
+            },
+            "visualization": false,
+            "x": 230,
+            "y": 86
+        },
+        {
+            "girderId": "56cb24574c46532a986fd3d9",
+            "modified": "2016-02-22 15:09:41.420000",
+            "name": "renameTreeTips",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "id": "newNames",
+                        "name": "New names",
+                        "type": "table"
+                    }
+                ],
+                "mode": "r",
+                "name": "renameTreeTips",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "result",
+                        "name": "Output tree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "result<-phy\nresult$tip.label<-newNames[,1]"
+            },
+            "visualization": false,
+            "x": 455,
+            "y": 34
+        },
+        {
+            "girderId": "56cb226e4c46532a986fd3c3",
+            "modified": "2016-02-22 15:03:24.784000",
+            "name": "extractGenus 1",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "default": {
+                            "data": "_",
+                            "format": "text",
+                            "type": "string"
+                        },
+                        "description": "Character that separates genus and species names",
+                        "format": "text",
+                        "id": "splitChar",
+                        "name": "Split character",
+                        "type": "string"
+                    }
+                ],
+                "mode": "r",
+                "name": "extractGenus",
+                "outputs": [
+                    {
+                        "format": "r.dataframe",
+                        "id": "result",
+                        "name": "Genus Names",
+                        "type": "table"
+                    }
+                ],
+                "script": "extractGenus<-function(speciesNames, splitCharacter=\" \") {\n  genus<-character(length=length(speciesNames))\n  tt<-strsplit(speciesNames, split=splitCharacter)\n  for(i in 1:length(speciesNames)) {\n    genus[i]<-tt[[i]][1]\n  }\n  return(genus)\n}\n\nresult<-extractGenus(phy$tip.label, splitCharacter=splitChar)\nresult<-as.matrix(result)"
+            },
+            "visualization": false,
+            "x": 230,
+            "y": 317
+        },
+        {
+            "girderId": "56cb24574c46532a986fd3d9",
+            "modified": "2016-02-22 15:09:41.420000",
+            "name": "renameTreeTips 1",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "phy",
+                        "name": "Input tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "id": "newNames",
+                        "name": "New names",
+                        "type": "table"
+                    }
+                ],
+                "mode": "r",
+                "name": "renameTreeTips",
+                "outputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "result",
+                        "name": "Output tree",
+                        "type": "tree"
+                    }
+                ],
+                "script": "result<-phy\nresult$tip.label<-newNames[,1]"
+            },
+            "visualization": false,
+            "x": 467,
+            "y": 256
+        },
+        {
+            "girderId": "56d45ef74c4653684cf6823a",
+            "modified": "2016-02-29 15:10:41.480397",
+            "name": "removeNonMatchingAssoc",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "tree1",
+                        "name": "First tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.apetree",
+                        "id": "tree2",
+                        "name": "Second tree",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "id": "assoc",
+                        "name": "Associations",
+                        "type": "table"
+                    }
+                ],
+                "mode": "r",
+                "name": "removeNonMatchingAssoc",
+                "outputs": [
+                    {
+                        "format": "r.dataframe",
+                        "id": "newAssoc",
+                        "name": "Matching associations",
+                        "type": "table"
+                    }
+                ],
+                "script": "\nbadRow<-which(!((assoc[,1] %in% tree1$tip.label) & (assoc[,2] %in% tree2$tip.label)))\nnewAssoc<-assoc[-badRow,]"
+            },
+            "visualization": false,
+            "x": 684,
+            "y": 138
+        },
+        {
+            "girderId": "56d45f9c4c4653684cf6823b",
+            "modified": "2016-03-01 08:43:06.503000",
+            "name": "cophylo",
+            "task": {
+                "description": "",
+                "inputs": [
+                    {
+                        "format": "r.apetree",
+                        "id": "t1",
+                        "name": "Tree 1",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.apetree",
+                        "id": "t2",
+                        "name": "Tree 2",
+                        "type": "tree"
+                    },
+                    {
+                        "format": "r.dataframe",
+                        "id": "assoc",
+                        "name": "associations",
+                        "type": "table"
+                    }
+                ],
+                "mode": "r",
+                "name": "cophylo",
+                "outputs": [
+                    {
+                        "format": "png.base64",
+                        "id": "cophyloPlot",
+                        "name": "cophylogeny plot",
+                        "type": "image"
+                    }
+                ],
+                "script": "library(cardoonTools)\nlibrary(phytools)\n\ncc<-cophylo(t1, t2, assoc=assoc, rotate=TRUE)\n    \n# plot and wrap the result in a PNG for output on the webpage\ncophyloPlot <- cardoonPlot(expression(plot(cc)))\ncophyloPlot <- cophyloPlot$png"
+            },
+            "visualization": false,
+            "x": 919,
+            "y": 305
+        }
+    ]
+}
