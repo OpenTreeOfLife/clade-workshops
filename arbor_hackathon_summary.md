@@ -31,7 +31,7 @@ Eventually all functions will be included in [Arbor collections](https://github.
 ![cophyloflow](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophyloflow.png)
 The Arbor workflow [phytoTangleTree](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/arbor_analyses/phytophaga/phytoTangleTree.json) matches the two trees by dropping an underscore character and extracting genus names. We then remove any rows from the matrix that don't match both trees, and plot using the function cophylo from phytools.
 
-![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophyloinputs.png)
+![inputs](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophyloinput.png)
 ![cophylo](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/cophylo.png)
 
 # Catfishes
@@ -43,7 +43,7 @@ The Phenoscape team provided Arbor with sample-size data matrices and a matching
 ![heatmap](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/catfish-all-values-matrix.png)
 
 **Ipad version**
-![heatmap](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/ipad-matrix-explorer.jpg)
+![heatmap](https://github.com/OpenTreeOfLife/clade-workshops/blob/master/images/ipad-matrix-explorer.jpeg)
 
 The catfish tree was rolled up to be viewable at the family level using some traits selected out the full matrix:
 
